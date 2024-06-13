@@ -1,0 +1,54 @@
+<div class="container g-0 section_padding">
+  <div class="row g-0">
+    <div class="col">
+      <h1 class="d-flex align-items-center">
+        Food Delivery Restaurants in
+        <span style="font-size: 36px; padding: 0 0 0 8px">{{ cityName }}</span>
+      </h1>
+
+      @if ( restaurantList === undefined) {
+      <div class="row pt-3 d-flex justify-content-center">
+        <div class="col-12 d-flex justify-content-center">
+          <img src="assets\images\404.gif" class="img-fluid" />
+        </div>
+      </div>
+      } @else {
+      <div class="row gy-5 pt-3">
+        @for (item of restaurantList ; track $index) {
+        <div class="col-3">
+          <div class="restaurant_card" (click)="routeToMenu(item?.Id)">
+            <img [src]="item?.ShopImage" alt="" />
+            @if (item?.Tags.length > 0 ) { @for (tag of item?.Tags; track
+            $index) {
+            <span class="promo">{{ tag?.Tag }}</span>
+            } }
+            <div class="restaurant_card_content">
+              <strong>{{ item?.StoreName }}</strong>
+              <span
+                >Chicken Rice, Grill, Middle Eastern, wraps, Grill, Middle
+                Eastern, wraps</span
+              >
+              <div class="d-flex align-items-center">
+                <i class="bi bi-star-fill" style="color: var(--yellow)"
+                  ><span class="ps-1">{{ item?.Rating }}</span></i
+                >
+                <i class="bi bi-clock ms-3" style="color: var(--light-gray)"
+                  ><span class="ps-1"
+                    >{{ item?.EstimatedDeliveryTime }} mins
+                  </span></i
+                >
+                <i class="bi bi-dot"><span>6.3 km</span></i>
+              </div>
+              <a>
+                <i class="bi bi-tag pe-1" style="color: var(--orange)"></i>Up to
+                RM15 Off MFoodz, Only with testing testing</a
+              >
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+      }
+    </div>
+  </div>
+</div>

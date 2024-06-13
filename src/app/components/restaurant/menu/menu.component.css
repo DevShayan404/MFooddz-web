@@ -1,0 +1,207 @@
+.delivery-date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--orange);
+  border-radius: 12px;
+  padding: 4px 15px;
+}
+.tabs {
+  font-weight: 500;
+  border: 0;
+  border-bottom: 2px solid var(--orange);
+  padding: 0 0 5px 0;
+  width: max-content;
+  text-align: center;
+}
+/* /////////menu Links/////////// */
+::ng-deep.owl-theme .owl-nav {
+  margin-top: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+::ng-deep.owl-theme .owl-nav [class*="owl-"] {
+  color: red;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 0;
+}
+::ng-deep.owl-carousel .owl-nav .owl-prev {
+  position: absolute;
+  left: -35px;
+  top: 0;
+}
+
+::ng-deep.owl-carousel .owl-nav .owl-next {
+  position: absolute;
+  right: -20px;
+  top: 0;
+}
+::ng-deep.owl-carousel .owl-nav .owl-prev:hover,
+::ng-deep.owl-carousel .owl-nav .owl-next:hover {
+  background: transparent;
+  color: var(--orange);
+}
+/* ///////////////////////Menu cards///////////////////////// */
+.nav-card-section {
+  background-color: #f2f2f2;
+  width: 100%;
+}
+.card {
+  border: 0;
+}
+.card-body {
+  display: flex;
+  gap: 12px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.menu-content {
+  overflow: hidden;
+  flex-flow: column nowrap;
+  display: flex;
+  width: 100%;
+}
+.menu-content p {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+/* .cart-button {
+  overflow: hidden;
+  width: 100%;
+}
+.cart-button p {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+} */
+.add-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.add-button i {
+  background: var(--orange);
+  padding: 5px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 18px;
+}
+/* //////////cart-main/////////// */
+.cart-main button {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+.cart-main button span {
+  color: #fff;
+}
+.cart-main ul {
+  margin: 30px 0;
+  border: 0;
+  border-top: 1px solid #c7c7c7;
+}
+.cart-main ul li {
+  display: flex;
+  gap: 15px;
+  border: 0;
+  border-bottom: 1px solid #c7c7c7;
+  padding: 15px 0;
+}
+.cart-main ul li .cart-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5px 5px 5px;
+}
+.cart-main ul li .cart-button .quantity-button {
+  display: flex;
+  align-items: center;
+  background-color: #f2f2f2;
+  border-radius: 5rem;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+.cart-main ul li .cart-button .quantity-button p {
+  padding: 0 10px;
+}
+.cart-main ul li .cart-button .quantity-button i {
+  padding: 8px;
+  background: #fff;
+  color: #646464;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  cursor: pointer;
+}
+/* ////////////////modal/////////////// */
+::-webkit-scrollbar {
+  display: none;
+}
+.modal-header {
+  padding: 10px 10px 5px 10px;
+  border-bottom: 0;
+}
+.select-topping {
+  display: flex;
+  flex-flow: column nowrap;
+  /* gap: 5px; */
+}
+.select-topping p {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.select-topping p i {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  background: #fff6a7;
+  color: #6d5401;
+  border-radius: 5px;
+  padding: 2px 8px;
+}
+.select-topping .list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid #c7c7c7;
+  padding: 8px 0;
+}
+.select-topping .list label{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.select-topping .list:last-child {
+  border-bottom: 0;
+}
+/* ////////////// */
+.menu-links::ng-deep.owl-carousel.owl-drag .owl-item {
+  width: max-content !important;
+  margin-right: 30px !important;
+}
+.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  margin-top: 50px;
+}

@@ -1,0 +1,217 @@
+<section class="banner_main"></section>
+<section class="location_main">
+  <div class="container search_container">
+    <div class="search_div">
+      <h5>Good Afternoon</h5>
+      <h1>Where should we deliver your food today?</h1>
+      <form [formGroup]="locationForm" (ngSubmit)="submitForm()">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Enter your location">
+            <div class="input_div">
+              <i class="bi bi-geo-alt-fill"></i>
+              @if(selectedLocation ){
+              <nz-input-group [nzSuffix]="suffixIconSearch">
+                <input
+                  class="current_location_input"
+                  type="text"
+                  nz-input
+                  placeholder="input search text"
+                  [value]="selectedLocation"
+                />
+              </nz-input-group>
+              <ng-template #suffixIconSearch>
+                <i (click)="clearLocation()" class="bi bi-x"></i>
+              </ng-template>
+
+              }
+              <nz-select
+                [nzShowSearch]="false"
+                [nzShowArrow]="false"
+                [nzAllowClear]="false"
+                nzPlaceHolder="Select a person"
+                formControlName="location"
+              >
+                <nz-option
+                  *ngFor="let list of savedLocationList"
+                  [nzLabel]="list?.LocationsName"
+                  [nzValue]="list?.Coordinates"
+                ></nz-option>
+              </nz-select>
+              <i
+                style="cursor: pointer"
+                class="bi bi-crosshair2"
+                (click)="getCurrentLocation()"
+              ></i>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control>
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="submitForm()"
+            >
+              Search
+            </button>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </div>
+  </div>
+  <hr />
+</section>
+<!-- --------------------Promo---------------------- -->
+<section>
+  <div class="container g-0 pt-3">
+    <div class="row g-0">
+      <div class="col">
+        <h1 class="d-flex align-items-center">
+          MFoodz Promo in
+          <span style="font-size: 36px; padding: 0 0 0 8px">Karachi</span>
+        </h1>
+        <owl-carousel-o [options]="customOptions">
+          <ng-container *ngFor="let slide of promoList">
+            <ng-template carouselSlide [id]="slide.id">
+              <div class="restaurant_card">
+                <img src="assets\images\promoCardmg.jpg" alt="" />
+                <span class="promo">promo</span>
+                <div class="restaurant_card_content">
+                  <strong>Shawarma City - KLCC</strong>
+                  <span
+                    >Chicken Rice, Grill, Middle Eastern, wraps, Grill, Middle
+                    Eastern, wraps</span
+                  >
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-star-fill" style="color: var(--yellow)"
+                      ><span class="ps-1">4.6</span></i
+                    >
+                    <i class="bi bi-clock ms-3" style="color: var(--light-gray)"
+                      ><span class="ps-1">40 mins </span></i
+                    >
+                    <i class="bi bi-dot"><span>6.3 km</span></i>
+                  </div>
+                  <a>
+                    <i class="bi bi-tag pe-1" style="color: var(--orange)"></i
+                    >Up to RM15 Off MFoodz, Only with testing testing</a
+                  >
+                </div>
+              </div>
+            </ng-template>
+          </ng-container>
+        </owl-carousel-o>
+        <button type="button" class="btn btn-outline-secondary w-100 mt-4">
+          See all promotions
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- --------------------something for everyone---------------------- -->
+<section>
+  <div class="container g-0 mt-5">
+    <div class="row g-0">
+      <div class="col">
+        <h1 class="d-flex align-items-center">
+          There's something for everyone!
+        </h1>
+        <div class="row">
+          @for (item of promoList; track $index) {
+          <div class="col-3 gy-2">
+            <div class="restaurant_card">
+              <img src="assets\images\promoCardmg.jpg" alt="" />
+              <span class="promo">promo</span>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- --------------------why MFoodz---------------------- -->
+<section>
+  <div class="container g-0 mt-5">
+    <div class="row g-0">
+      <div class="col">
+        <h1 class="d-flex align-items-center">Why MFoodz?</h1>
+        <div class="row">
+          <ul>
+            @for (item of whyMFood; track $index) {
+            <li class="d-flex align-items-start py-1">
+              <strong class="d-flex">
+                <i class="bi bi-check-lg" style="color: var(--orange)"></i>
+                {{ item?.tittle }} -
+              </strong>
+              <p class="ps-1">{{ item?.description }}</p>
+            </li>
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- --------------------FAQ---------------------- -->
+<section>
+  <div class="container g-0 mt-5">
+    <div class="row g-0">
+      <div class="col">
+        <h1 class="d-flex align-items-center">Frequently Asked Questions</h1>
+        <div class="row pt-4">
+          <h4>What is MFoodz?</h4>
+          <p>
+            MFoodz is the fastest Food Delivery service in Singapore. We have
+            curated all your favorite dishes, restaurants, and cuisines to help
+            you grab your food in the easiest & quickest way possible. Find and
+            order your favorite cuisines across Singapore - order food online in
+            just a few taps, from Kaya Toast for Breakfast, to Laksa for Lunch,
+            from Kopi for brunch to Famous Malay Fish Curry for Dinner! We are
+            here to satisfy your hunger with a wide selection of merchant
+            partners in Singapore.
+          </p>
+        </div>
+        <button type="button" class="btn btn-outline-secondary w-100 mt-4">
+          Read More
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- --------------------download app---------------------- -->
+<section style="background-color: #f4f4f4">
+  <div class="container g-0 py-5 mt-5">
+    <div class="row g-5 py-5">
+      <div class="col-6 d-flex flex-column align-items-center px-5">
+        <img width="150" src="assets\images\bottom-food-options.svg" alt="" />
+        <strong>Curated restaurants</strong>
+        <p style="text-align: center">
+          Form small bites to big meals, we won't limit your appetite. Go ahead
+          and order all you want.
+        </p>
+      </div>
+      <div class="col-6 d-flex flex-column align-items-center px-5">
+        <img
+          width="177"
+          src="assets\images\ilus-cool-features-app.svg"
+          alt=""
+        />
+
+        <strong>Curated restaurants</strong>
+        <p style="text-align: center">
+          Form small bites to big meals, we won't limit your appetite. Go ahead
+          and order all you want.
+        </p>
+        <div class="row g-4 pt-4">
+          <div class="col">
+            <img src="assets\images\logo-appstore.svg" alt="" />
+          </div>
+          <div class="col">
+            <img src="assets\images\logo-playstore.svg" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

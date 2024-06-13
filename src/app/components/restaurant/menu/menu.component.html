@@ -1,0 +1,312 @@
+<main>
+  <section>
+    <!-- ////////////////////////header//////////////////////// -->
+    <div class="container g-0 pt-4">
+      <div class="row g-0">
+        <div class="col-12">
+          <!-- //////////////breadcrumb///////////// -->
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="">Home</a></li>
+              <li class="breadcrumb-item">
+                <a routerLink="restaurant/list">Restaurants</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">Menu</li>
+            </ol>
+          </nav>
+          <!-- //////////////breadcrumb///////////// -->
+          @for (item of restaurantData; track $index) {
+          <h1>{{ item?.StoreName }}</h1>
+          <span
+            >Chicken Rice, Grill, Middle Eastern, wraps, Grill, Middle Eastern,
+            wraps</span
+          >
+          <div class="d-flex align-items-center">
+            <!-- @if (item?.Rating) { -->
+            <i
+              class="bi bi-star-fill d-flex align-items-center"
+              style="color: var(--yellow)"
+              ><span class="ps-1">{{ item?.Rating }}</span></i
+            >
+            <!-- } -->
+            <i
+              class="bi bi-clock ms-3 d-flex align-items-center"
+              style="color: var(--light-gray)"
+              ><span class="ps-1"
+                >{{ item?.EstimatedDeliveryTime }} mins
+              </span></i
+            >
+            <i class="bi bi-dot d-flex align-items-center"
+              ><span>6.3 km</span></i
+            >
+          </div>
+          <p class="pt-2">
+            <b>Opening Hours</b> {{ item?.OpenTime }} -
+            {{ item?.CloseTime }}
+          </p>
+          <p class="pt-2 d-flex align-items-center">
+            <i class="bi bi-exclamation-circle me-2"></i>
+            For orders less that RM12.00 for this restaurant, a small order fee
+            applies.
+          </p>
+          }
+          <div class="row gx-4 pt-4">
+            <div class="col-4">
+              <div class="delivery-date">
+                <i class="bi bi-calendar"></i>
+                <p>Deliver date:</p>
+                <nz-select
+                  nzBorderless
+                  ngModel="Today"
+                  [nzOptions]="deliveryDate"
+                ></nz-select>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="delivery-date">
+                <i class="bi bi-clock"></i>
+                <p>Deliver time:</p>
+                <nz-select
+                  nzBorderless
+                  ngModel="Now"
+                  [nzOptions]="deliverytime"
+                ></nz-select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <!-- ////////////////////////menu links//////////////////////// -->
+    <div
+      class=""
+      [ngClass]="cartItems.length > 0 ? 'container-fluid' : 'container'"
+    >
+      <div class="row pt-5">
+        <div class="" [ngClass]="cartItems.length > 0 ? 'col-9' : 'col-12'">
+          <!-- <div class="div2" id="div2" [class.fixed]="isDiv2Fixed"> -->
+          <owl-carousel-o [options]="customOptionsMenuLinks" class="menu-links">
+            <ng-container *ngFor="let slide of restaurantMenu">
+              <ng-template carouselSlide>
+                <div class="tabs" (click)="scrollToSection(slide?.CategoryId)">
+                  {{ slide?.Category | titlecase }}
+                </div>
+              </ng-template>
+            </ng-container>
+          </owl-carousel-o>
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+    <!-- ////////////////////////menu cards//////////////////////// -->
+    <div class="nav-card-section pb-5">
+      <div
+        class=""
+        [ngClass]="cartItems.length > 0 ? 'container-fluid' : 'container'"
+      >
+        <div class="row">
+          <div class="" [ngClass]="cartItems.length > 0 ? 'col-9' : 'col-12'">
+            @for (item of restaurantMenu; track $index) {
+            <div class="row gy-4" [id]="item?.CategoryId">
+              <h1 class="pt-5">{{ item?.Category | titlecase }}</h1>
+              @for (list of item?.MenuItem ; track $index) {
+              <div class="col-4">
+                <div class="card">
+                  <div class="card-body">
+                    <div>
+                      <nz-avatar
+                        [nzShape]="'square'"
+                        [nzSize]="100"
+                        [nzSrc]="list?.ImageIcon"
+                      ></nz-avatar>
+                    </div>
+                    <div class="menu-content">
+                      <p style="text-align: start">
+                        <b>{{ list?.Name | titlecase }}</b>
+                      </p>
+                      <p
+                        class="pt-2"
+                        style="
+                          font-size: 12px;
+                          font-weight: 500;
+                          text-align: start;
+                        "
+                      >
+                        {{ list?.Description }}
+                      </p>
+                      <div class="add-button pt-4">
+                        <p>
+                          @if (list?.DiscountAmount != null) {
+                          <b class="me-2">{{ list?.DiscountAmount }}</b>
+                          <b style="text-decoration: line-through">{{
+                            list?.BaseAmount
+                          }}</b>
+                          } @else {
+                          <b>{{ list?.BaseAmount }}</b>
+                          }
+                        </p>
+
+                        @if (list?.SubMenuId === null ) {
+                        <i
+                          class="bi bi-plus-lg"
+                          (click)="addItemsInCartWithoutSubmenu(list)"
+                          style="cursor: pointer"
+                        ></i>
+                        } @else {
+                        <i
+                          class="bi bi-plus-lg"
+                          data-bs-toggle="modal"
+                          data-bs-target="#staticBackdrop"
+                          style="cursor: pointer"
+                          (click)="getSubmenuData(list)"
+                        ></i>
+                        }
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              }
+            </div>
+            }
+          </div>
+          <!-- ////////////////////////Cart//////////////////////// -->
+          @if (cartItems.length > 0) {
+          <div class="col-3 px-3" style="background-color: #fff">
+            <div class="cart-main">
+              @for (item of restaurantData; track $index) {
+              <span>Your cart from</span>
+              <h5>{{ item?.StoreName }}</h5>
+              <button class="btn btn-primary" (click)="routeToCheckout()">
+                <span>Checkout</span>
+                <span>{{ item?.Currency }} {{ totalAmount }}</span></button
+              >}
+              <ul>
+                @for (item of cartItems; track $index) {
+                <li>
+                  <div>
+                    <nz-avatar
+                      [nzShape]="'square'"
+                      [nzSize]="90"
+                      [nzSrc]="item?.ImageIcon"
+                    ></nz-avatar>
+                  </div>
+                  <div style="width: 100%; overflow: hidden">
+                    <p>
+                      <b>{{ item?.Name }}</b>
+                    </p>
+                    <span> {{ item?.Description }}</span>
+                    <div class="cart-button pt-3">
+                      <p>
+                        <!-- @if (item?.DiscountAmount != null) {
+                        <b class="me-2">{{ item?.DiscountAmount }}</b>
+                        } @else { -->
+                        <b>{{ item?.Amount }}</b>
+                        <!-- } -->
+                      </p>
+                      <div class="quantity-button">
+                        <i
+                          class="bi bi-trash-fill"
+                          (click)="decreaseQuantity(item)"
+                        ></i>
+                        <p>{{ item?.Quantity }}X</p>
+                        <i
+                          class="bi bi-plus-lg"
+                          (click)="addItemsInCartWithoutSubmenu(item)"
+                        ></i>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                }
+              </ul>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      @for (item of subMenuList; track $index) {
+      <div class="modal-body">
+        <h3>{{ item?.Name | titlecase }}</h3>
+        <p>
+          {{ item?.Description }}
+        </p>
+        <img
+          [src]="item?.ImageIcon"
+          class="mt-3"
+          style="border-radius: 0.5rem; width: 100%; height: auto"
+        />
+        @for (list of item?.SubMenu ; track list?.MenuId; let i= $index ) { @if
+        (list?.SubMenuHedaer ){
+        <div class="select-topping pt-3">
+          <p>
+            <b>{{ list?.Name | titlecase }}</b>
+            @if (list?.UpTo === 1 ) {
+            <i class="bi bi-exclamation-triangle">Required </i>
+            }
+          </p>
+          <span>{{ list?.Description }}</span>
+
+          @for (item of list?.SubMenuHedaer ; track $index) {
+          <div class="list">
+            <label
+              ><input
+                type="radio"
+                name="submenu-{{ i }}"
+                [value]="item?.SubMenuId"
+                [checked]="selectedSubMenu[i] === item?.SubMenuId"
+                (change)="onSubMenuChange(i, item.SubMenuId, item)"
+              />
+              {{ item?.Name | titlecase }}</label
+            >
+            @if (item?.Amount !== 0) {
+            <p>{{ item?.Amount }}</p>
+            }
+          </div>
+          }
+        </div>
+        } }
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button> -->
+        <button
+          type="button"
+          class="btn btn-primary"
+          style="width: max-content"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          Add to cart - {{ item?.Amount }}
+        </button>
+      </div>
+      }
+    </div>
+  </div>
+</div>

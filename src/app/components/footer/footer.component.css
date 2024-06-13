@@ -1,0 +1,18 @@
+footer ul li span {
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+footer ul li span:hover {
+  text-decoration: underline;
+  color: var(--orange);
+}
+.bi-facebook,
+.bi-instagram,
+.bi-twitter {
+  font-size: 22px;
+}
+.ant-divider-vertical {
+  top: -0.5em;
+  border-left: 1px solid rgb(251 251 251);
+}

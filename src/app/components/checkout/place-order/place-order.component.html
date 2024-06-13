@@ -1,0 +1,400 @@
+<section>
+  <div class="checkout-main">
+    <div class="container">
+      <div class="row">
+        <div class="col-8">
+          <div class="checkout-left py-4">
+            <header class="d-flex align-items-center">
+              <nz-avatar
+                [nzSize]="100"
+                nzSrc="assets\images\activeOrder.webp"
+              ></nz-avatar>
+              <h2 class="ms-3">KFC - Pasir Gudang DT</h2>
+            </header>
+            <div class="card w-100 mt-3">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                  <h3>Delivery details</h3>
+                  <nz-segmented
+                    [nzOptions]="options"
+                    (nzValueChange)="handleIndexChange($event)"
+                  ></nz-segmented>
+                </div>
+                <div class="mt-3">
+                  <app-google-map></app-google-map>
+                </div>
+                <div class="mt-3">
+                  <ul>
+                    <li
+                      class="d-flex align-items-center justify-content-between delivery-detail-list"
+                    >
+                      <div class="d-flex align-items-center">
+                        <i
+                          class="bi bi-geo-alt-fill me-3"
+                          style="font-size: 24px"
+                        ></i>
+                        <div>
+                          <p><b>San Francisco</b></p>
+                          <span>CA</span>
+                        </div>
+                      </div>
+                      <button
+                        class="btn btn-primary"
+                        style="width: max-content; border-radius: 2rem"
+                      >
+                        Edit
+                      </button>
+                    </li>
+                    <li
+                      class="d-flex align-items-center justify-content-between delivery-detail-list"
+                    >
+                      <div class="d-flex align-items-center">
+                        <i
+                          class="bi bi-person-fill me-3"
+                          style="font-size: 24px"
+                        ></i>
+                        <div>
+                          <p><b>Meet at my door</b></p>
+                          <span style="color: var(--orange)"
+                            >Add delivery instructions</span
+                          >
+                        </div>
+                      </div>
+                      <button
+                        class="btn btn-primary"
+                        style="width: max-content; border-radius: 2rem"
+                      >
+                        Edit
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <hr />
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                  <h3>Delivery estimate</h3>
+                </div>
+                <div class="mt-3">
+                  <ul>
+                    <li class="delivery-estimate-list-active my-2">
+                      <div class="d-flex align-items-center">
+                        <i
+                          class="bi bi-lightning-charge-fill me-3"
+                          style="font-size: 24px"
+                        ></i>
+                        <div>
+                          <p>
+                            <b>Prority</b>
+                            <button
+                              class="btn btn-primary ms-2"
+                              style="
+                                width: max-content;
+                                border-radius: 2rem;
+                                padding: 1px 10px;
+                              "
+                            >
+                              Faster
+                            </button>
+                          </p>
+                          <span>10 - 20 min. Delivered directly to you</span>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="delivery-estimate-list my-2">
+                      <div class="d-flex align-items-center">
+                        <i
+                          class="bi bi-patch-check-fill me-3"
+                          style="font-size: 24px"
+                        ></i>
+                        <div>
+                          <p><b>Standard</b></p>
+                          <span>15 - 30 min</span>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="delivery-estimate-list my-2">
+                      <div class="d-flex align-items-center">
+                        <i
+                          class="bi bi-postcard-fill me-3"
+                          style="font-size: 24px"
+                        ></i>
+                        <div>
+                          <p><b>Schedule</b></p>
+                          <span>Select a time</span>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <hr />
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                  <h3>Payment</h3>
+                </div>
+                <div class="mt-3">
+                  <ul>
+                    <li
+                      class="d-flex align-items-center justify-content-between delivery-detail-list"
+                    >
+                      <div class="d-flex align-items-center">
+                        <i
+                          class="bi bi-credit-card-2-back-fill me-3"
+                          style="font-size: 24px"
+                        ></i>
+                        <div>
+                          <p><b>Add payment method</b></p>
+                        </div>
+                      </div>
+                      <button
+                        class="btn btn-primary"
+                        style="width: max-content; border-radius: 2rem"
+                      >
+                        Edit
+                      </button>
+                    </li>
+                    <li
+                      class="d-flex align-items-center justify-content-between delivery-detail-list"
+                    >
+                      <div class="d-flex align-items-center">
+                        <i
+                          class="bi bi-tag-fill me-3"
+                          style="font-size: 24px"
+                        ></i>
+                        <div>
+                          <p><b>Add promo code</b></p>
+                        </div>
+                      </div>
+                      <button
+                        class="btn btn-primary"
+                        style="width: max-content; border-radius: 2rem"
+                      >
+                        Add
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <hr />
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                  <h3>Order summary</h3>
+                  <button
+                    class="btn btn-primary"
+                    style="width: max-content; border-radius: 2rem"
+                  >
+                    <i class="bi bi-plus"></i>
+                    Add Items
+                  </button>
+                </div>
+                <div class="mt-3">
+                  <ul>
+                    <li
+                      class="d-flex align-items-center justify-content-between"
+                    >
+                      <p><b>3 Items</b></p>
+                      <i
+                        class="bi bi-chevron-down"
+                        (click)="showOrdersSummary()"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseExample"
+                        aria-expanded="false"
+                        aria-controls="collapseExample"
+                      ></i>
+                    </li>
+                    @if (isVisibleOrderSummary) {
+                    <li class="d-flex align-items-center pt-3">
+                      <nz-avatar
+                        class="me-2"
+                        [nzShape]="'square'"
+                        [nzSize]="60"
+                        nzSrc="assets\images\activeOrder.webp"
+                      ></nz-avatar>
+                      <nz-avatar
+                        class="me-2"
+                        [nzShape]="'square'"
+                        [nzSize]="60"
+                        nzSrc="assets\images\activeOrder.webp"
+                      ></nz-avatar>
+                      <button
+                        class="btn btn-primary"
+                        style="width: max-content; border-radius: 2rem"
+                      >
+                        See all
+                      </button>
+                    </li>
+                    }
+
+                    <li>
+                      <div class="collapse mt-3" id="collapseExample">
+                        <ul>
+                          <li
+                            class="d-flex align-items-start justify-content-between delivery-detail-list"
+                          >
+                            <div class="d-flex align-items-start">
+                              <span
+                                class="order-summary-quantity me-3"
+                                style="
+                                  background: var(--orange);
+                                  color: #fff;
+                                  padding: 2px 10px;
+                                "
+                                >1</span
+                              >
+                              <div>
+                                <p><b>Zinger Burger</b></p>
+                                <p
+                                  style="
+                                    max-width: 200px;
+                                    color: var(--light-gray);
+                                    font-size: 12px;
+                                  "
+                                >
+                                  Lorem ipsum dolor sit amet, consectetur
+                                  adipisicing elit.
+                                </p>
+                              </div>
+                            </div>
+                            <span>$ 29.0</span>
+                          </li>
+                          <li
+                            class="d-flex align-items-start justify-content-between delivery-detail-list"
+                          >
+                            <div class="d-flex align-items-start">
+                              <span
+                                class="order-summary-quantity me-3"
+                                style="
+                                  background: var(--orange);
+                                  color: #fff;
+                                  padding: 2px 10px;
+                                "
+                                >1</span
+                              >
+                              <div>
+                                <p><b>Zinger Burger</b></p>
+                                <p
+                                  style="
+                                    max-width: 200px;
+                                    color: var(--light-gray);
+                                    font-size: 12px;
+                                  "
+                                >
+                                  Lorem ipsum dolor sit amet, consectetur
+                                  adipisicing elit.
+                                </p>
+                              </div>
+                            </div>
+                            <span>$ 29.0</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4 py-4">
+          <div class="checkout-right">
+            <button class="btn btn-primary">Continue to payment</button>
+            <div class="card my-3">
+              <div class="card-body">
+                <h3>Order total</h3>
+                <div
+                  class="d-flex mt-3"
+                  style="
+                    background-color: #fff2d9;
+                    border-radius: 10px;
+                    overflow: hidden;
+                  "
+                >
+                  <div class="pt-2 px-3">
+                    <p>
+                      <b style="font-weight: 600"
+                        >Save $ 4.35 on this order with MFoodz</b
+                      >
+                    </p>
+                    <p
+                      style="font-size: 12px"
+                      class="d-flex align-items-center"
+                    >
+                      Try free for 1 month<i class="bi bi-arrow-right ms-2"></i>
+                    </p>
+                  </div>
+                  <div>
+                    <nz-avatar
+                      [nzShape]="'square'"
+                      [nzSize]="80"
+                      nzSrc="assets\images\activeOrder.webp"
+                    ></nz-avatar>
+                  </div>
+                </div>
+                <ul class="pt-3">
+                  <li
+                    class="d-flex align-items-center justify-content-between pt-2"
+                  >
+                    <span>Subtotal</span>
+                    <p>$ 37.9</p>
+                  </li>
+                  <li
+                    class="d-flex align-items-center justify-content-between pt-2"
+                  >
+                    <span
+                      >Delivery Fee <i class="bi bi-exclamation-circle-fill"></i
+                    ></span>
+                    <p>$ 37.9</p>
+                  </li>
+                  <li
+                    class="d-flex align-items-center justify-content-between pt-2"
+                  >
+                    <p>
+                      Taxes & Other Fees
+                      <i class="bi bi-exclamation-circle-fill"></i>
+                    </p>
+                    <p>$ 37.9</p>
+                  </li>
+                </ul>
+                <hr />
+                <div>
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <p>
+                      Add a tip <i class="bi bi-exclamation-circle-fill"></i>
+                    </p>
+                    <p>$ 0.00</p>
+                  </div>
+                  <span style="font-size: 12px"
+                    >They make delivery possible - no matter what time is</span
+                  >
+                  <nz-segmented
+                    [nzOptions]="tip"
+                    (nzValueChange)="handleIndexChange($event)"
+                  ></nz-segmented>
+                </div>
+                <hr />
+                <div class="d-flex align-items-center justify-content-between">
+                  <p style="font-size: 20px"><b>Total</b></p>
+                  <p style="font-size: 20px"><b>$ 49.43</b></p>
+                </div>
+                <p
+                  style="font-size: 12px; color: var(--light-gray); margin: 0"
+                  class="pt-3"
+                >
+                  If you’re not around when the delivery person arrives, they’ll
+                  leave your order at the door. By placing your order, you agree
+                  to take full responsibility for it once it’s delivered. Orders
+                  containing alcohol or other restricted items may not be
+                  eligible for leave at door and will be returned to the store
+                  if you are not available.`
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

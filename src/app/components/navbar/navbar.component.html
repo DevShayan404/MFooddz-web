@@ -1,0 +1,63 @@
+<nav appNavbar [ngClass]="{ scrolled: scrolled }">
+  <div class="container g-0">
+    <div class="row d-flex justify-content-between align-items-center g-0">
+      <div class="col-2">
+        <img
+          routerLink=""
+          class="logo"
+          src="assets\images\logo.png"
+          style="cursor: pointer"
+        />
+      </div>
+      <!-- /////Restaurant Module////// -->
+      <!-- <div class="col-8 ps-4">
+        <div class="delivery-pickup-button">
+          <button>Delivery</button>
+          <button>Pickup</button>
+        </div>
+      </div> -->
+      <!-- /////Restaurant Module////// -->
+      <div class="col-2">
+        <div>
+          <nz-space>
+            <button *nzSpaceItem nz-button>
+              <i class="bi bi-bag"></i>
+            </button>
+            <div *nzSpaceItem>
+              @if(firstName){
+              <button
+                nz-button
+                nz-dropdown
+                [nzDropdownMenu]="menu"
+                nzPlacement="bottomCenter"
+              >
+                Hi, {{ firstName }}
+              </button>
+              <nz-dropdown-menu #menu="nzDropdownMenu">
+                <ul nz-menu>
+                  <li nz-menu-item>
+                    <nz-space>
+                      <i *nzSpaceItem class="bi bi-person-fill"></i>
+                      <span *nzSpaceItem>Profile</span>
+                    </nz-space>
+                  </li>
+                  <li nz-menu-item>
+                    <nz-space>
+                      <i *nzSpaceItem class="bi bi-box-arrow-left"></i>
+                      <span *nzSpaceItem (click)="logout()">Logout</span>
+                    </nz-space>
+                  </li>
+                </ul>
+              </nz-dropdown-menu>
+              }@else{
+              <button routerLink="authentication" nz-button>
+                Login/SignUp
+              </button>
+              }
+            </div>
+          </nz-space>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

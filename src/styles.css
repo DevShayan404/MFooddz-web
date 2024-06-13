@@ -1,0 +1,122 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+@import "ngx-owl-carousel-o/lib/styles/scss/owl.carousel";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+:root {
+  /* background: #F26C2A;
+  background: #7E7E7E;
+  background: #FFFFFF;
+  background: #000000;
+  background: #FFE500;
+  background: #2B1919; */
+  /* --lightGray-border: #f0efef;
+  --light-gray: #676767; */
+  /* --border: #c5c5c5;
+  --gray: #f7f7f7;
+  --rating: #efb923; */
+  --orange: #f26c2a;
+  --orange-hover: #de6a30;
+  --light-gray: #7e7e7e;
+  --yellow: #ffe500;
+  --border-color: #e5e5e5;
+  --border-radius: 8px;
+}
+h3 {
+  margin: 0;
+}
+
+hr {
+  margin: 4.5rem 0;
+}
+h1 {
+  font-weight: 600;
+  font-size: 36px;
+  text-align: justify;
+}
+h5 {
+  font-size: 18px;
+}
+h1 span {
+  color: var(--orange);
+}
+strong {
+  font-size: 16px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+span {
+  color: var(--light-gray);
+  font-size: 14px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+a {
+  font-size: 14px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+p {
+  margin: 0;
+  font-size: 14px;
+  text-align: justify;
+}
+i {
+  font-size: 16px;
+}
+/* button */
+.btn-primary {
+  width: 100%;
+  margin: 0 0;
+  font-size: 14px;
+  border: 1px solid var(--orange);
+}
+
+.btn-primary {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--orange);
+  --bs-btn-border-color: var(--orange);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--orange-hover);
+  --bs-btn-hover-border-color: var(--orange-hover);
+  --bs-btn-focus-shadow-rgb: 49, 132, 253;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--orange-hover);
+  --bs-btn-active-border-color: var(--orange-hover);
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: var(--orange);
+  --bs-btn-disabled-border-color: var(--orange);
+}
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.card {
+  border: 0;
+}
+.section_top_padding {
+  padding-top: 70px;
+}
+.section_padding {
+  padding: 20px 0 50px;
+}

@@ -1,0 +1,31 @@
+nav {
+  padding: 8px 0;
+  position: fixed;
+  width: 100%;
+  background: transparent;
+  z-index: 999;
+  transition: background-color 0.3s ease;
+}
+.logo {
+  width: 100%;
+}
+nav.scrolled {
+  background-color: white;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 5px 8px 0px;
+}
+
+.ant-btn {
+  height: 38px;
+  padding: 6px 15px;
+  border-radius: 8px;
+}
+.ant-btn:hover,
+.ant-btn:focus {
+  color: #000;
+  border-color: #e8e8e8;
+  background: #e8e8e8;
+}
+/* //////////delivery-pickup-button////////// */
+.delivery-pickup-button{
+  border: 1px solid red;
+}

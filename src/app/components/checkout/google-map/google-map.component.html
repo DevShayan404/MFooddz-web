@@ -1,0 +1,22 @@
+<google-map
+#map
+height="50vh"
+width="100%"
+[options]="mapOptions"
+[center]="mapCenter"
+>
+<!-- Pickup Marker -->
+<map-marker [options]="pickupMarkerOptions"></map-marker>
+
+<!-- Dropoff Marker -->
+<map-marker
+  *ngIf="dropoffMarkerOptions"
+  [options]="dropoffMarkerOptions"
+></map-marker>
+
+<!-- polyline  -->
+<map-polyline
+  *ngIf="polylineOptions"
+  [options]="polylineOptions"
+></map-polyline>
+</google-map>
