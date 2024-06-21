@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { SharingService } from '../../../core/sharing-service/sharing.service';
@@ -45,8 +45,9 @@ export class MenuComponent {
   collapseCart: boolean = false;
   cartItems: any[] = [];
   totalAmount!: number;
-  subMenuList!: any[];
   selectedSubMenu: any[] = [];
+  baseAmount: any;
+  totalSubmenuAmount: any;
   constructor(
     private router: Router,
     private sharingService: SharingService,
@@ -146,9 +147,12 @@ export class MenuComponent {
   }
 
   // -----------Add submenu in cart --------------
+  subMenuList!: any[];
+  isVisible = false;
   getSubmenuData(data: any) {
     this.subMenuList = [];
     this.selectedSubMenu = [];
+
     this.service.getShopSubmenu(data?.MenuId, data?.SubMenuId).subscribe({
       next: (res: any) => {
         const submenuItems = JSON.parse(res?.Result?.Data).ShopSubMenu[0]
@@ -160,30 +164,113 @@ export class MenuComponent {
           SubMenu: submenuItems,
         };
         this.subMenuList = [items];
+        this.baseAmount = data?.BaseAmount;
+        this.calculateTotalAmount();
+        this.openModal();
         // console.log(this.subMenuList);
       },
     });
   }
+  // //////////////////////////////////
+  onSubMenuHeaderSelect(subMenuIndex: number, subMenuHeader: any): void {
+    const existingIndex = this.selectedSubMenu.findIndex(
+      (item) => item.subMenuIndex === subMenuIndex
+    );
 
-  onSubMenuChange(index: number, subMenuId: number, list: any): void {
-    this.selectedSubMenu[index] = subMenuId;
-    // Create a deep copy of the original menu
-    const copiedSubmenu = JSON.parse(JSON.stringify(this.subMenuList));
-    // Set the SubMenu array to null in the copied menu
-    if (copiedSubmenu.length > 0) {
-      copiedSubmenu[0].SubMenu = null;
-      copiedSubmenu[0].SubMenu = [list];
+    if (existingIndex === -1) {
+      this.selectedSubMenu.push({ subMenuIndex, subMenuHeader });
+    } else {
+      this.selectedSubMenu[existingIndex].subMenuHeader = subMenuHeader;
     }
-    // this.cartItems.push(copiedSubmenu);
-    console.log(copiedSubmenu);
 
-    // const addAmountInSubmenu = this.subMenuList.find((item) => item);
-    // if (addAmountInSubmenu) {
-    //   addAmountInSubmenu.Amount += list?.Amount;
-    // }
-    // console.log(addAmountInSubmenu);
+    this.calculateTotalAmount();
   }
 
+  isSelected(subMenuIndex: number, subMenuHeaderId: number): boolean {
+    const selected = this.selectedSubMenu.find(
+      (item) => item.subMenuIndex === subMenuIndex
+    );
+    return selected
+      ? selected.subMenuHeader.SubMenuId === subMenuHeaderId
+      : false;
+  }
+  ////////////////////////////////////
+  onCheckboxChange(subMenuIndex: number, subMenuHeader: any, event: any): void {
+    const isChecked = event.target.checked;
+    const selectedSubmenu = this.selectedSubMenu.find(
+      (item) => item.subMenuIndex === subMenuIndex
+    );
+
+    if (isChecked) {
+      // If the checkbox is checked, deselect any previously selected items
+      this.selectedSubMenu = this.selectedSubMenu.filter(
+        (item) => !(item.subMenuIndex === subMenuIndex)
+      );
+
+      // Add the newly selected item to selectedSubMenu
+      this.selectedSubMenu.push({ subMenuIndex, subMenuHeader });
+
+      // Disable other checkboxes in the same group
+      this.disableOtherCheckboxes(subMenuIndex, subMenuHeader);
+    } else {
+      // If the checkbox is unchecked, remove it from selectedSubMenu
+      this.selectedSubMenu = this.selectedSubMenu.filter(
+        (item) =>
+          !(
+            item.subMenuIndex === subMenuIndex &&
+            item.subMenuHeader.SubMenuId === subMenuHeader.SubMenuId
+          )
+      );
+
+      // Enable all checkboxes in the same group
+      this.enableAllCheckboxes(subMenuIndex);
+    }
+
+    this.calculateTotalAmount();
+  }
+
+  disableOtherCheckboxes(subMenuIndex: number, selectedHeader: any): void {
+    const submenuHeaders =
+      this.subMenuList[0].SubMenu[subMenuIndex].SubMenuHedaer;
+
+    submenuHeaders.forEach((header: any) => {
+      if (header.SubMenuId !== selectedHeader.SubMenuId) {
+        header.disabled = true;
+      }
+    });
+  }
+  enableAllCheckboxes(subMenuIndex: number): void {
+    const submenuHeaders =
+      this.subMenuList[0].SubMenu[subMenuIndex].SubMenuHedaer;
+
+    submenuHeaders.forEach((header: any) => {
+      header.disabled = false;
+    });
+  }
+  // ////////////////////////////
+  calculateTotalAmount(): void {
+    this.totalSubmenuAmount = this.baseAmount;
+    this.selectedSubMenu.forEach((item) => {
+      this.totalSubmenuAmount += item.subMenuHeader.Amount;
+    });
+  }
+  /////////////////////////////
+
+  submenuAddToCart(): void {
+    if (this.selectedSubMenu.length > 0) {
+      console.log('Items added to cart:', this.selectedSubMenu);
+    } else {
+      alert('1');
+    }
+  }
+
+  // -----------Modal code--------------
+  closeModal() {
+    this.isVisible = false;
+  }
+  openModal() {
+    this.isVisible = true;
+  }
   // -----------Quantity button--------------
   decreaseQuantity(data: any): void {
     const existingItemIndex = this.cartItems.findIndex(

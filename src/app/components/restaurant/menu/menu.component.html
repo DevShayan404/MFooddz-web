@@ -157,8 +157,6 @@
                         } @else {
                         <i
                           class="bi bi-plus-lg"
-                          data-bs-toggle="modal"
-                          data-bs-target="#staticBackdrop"
                           style="cursor: pointer"
                           (click)="getSubmenuData(list)"
                         ></i>
@@ -231,82 +229,76 @@
   </section>
 </main>
 <!-- Modal -->
-<div
-  class="modal fade"
-  id="staticBackdrop"
-  data-bs-backdrop="static"
-  data-bs-keyboard="false"
-  tabindex="-1"
-  aria-labelledby="staticBackdropLabel"
-  aria-hidden="true"
+<nz-modal
+  [nzStyle]="{ top: '20px' }"
+  [(nzVisible)]="isVisible"
+  [nzContent]="modalContent"
+  [nzFooter]="modalFooter"
+  (nzOnCancel)="closeModal()"
 >
-  <div class="modal-dialog modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      @for (item of subMenuList; track $index) {
-      <div class="modal-body">
-        <h3>{{ item?.Name | titlecase }}</h3>
-        <p>
-          {{ item?.Description }}
-        </p>
-        <img
-          [src]="item?.ImageIcon"
-          class="mt-3"
-          style="border-radius: 0.5rem; width: 100%; height: auto"
-        />
-        @for (list of item?.SubMenu ; track list?.MenuId; let i= $index ) { @if
-        (list?.SubMenuHedaer ){
-        <div class="select-topping pt-3">
-          <p>
-            <b>{{ list?.Name | titlecase }}</b>
-            @if (list?.UpTo === 1 ) {
-            <i class="bi bi-exclamation-triangle">Required </i>
-            }
-          </p>
-          <span>{{ list?.Description }}</span>
+  <ng-template #modalContent>
+    @for (item of subMenuList; track $index) {
+    <h3>{{ item?.Name | titlecase }}</h3>
+    <p>
+      {{ item?.Description }}
+    </p>
+    <img
+      [src]="item?.ImageIcon"
+      class="mt-3"
+      style="border-radius: 0.5rem; width: 100%; height: auto"
+    />
+    @for (list of item?.SubMenu ; track list?.MenuId; let i= $index ) { @if
+    (list?.SubMenuHedaer ){
+    <div class="select-topping pt-3">
+      <p>
+        <b>{{ list?.Name | titlecase }}</b>
+        @if (list?.UpTo === 1 ) {
+        <i class="bi bi-exclamation-triangle">Required </i>
+        }
+      </p>
+      <span>{{ list?.Description }}</span>
 
-          @for (item of list?.SubMenuHedaer ; track $index) {
-          <div class="list">
-            <label
-              ><input
-                type="radio"
-                name="submenu-{{ i }}"
-                [value]="item?.SubMenuId"
-                [checked]="selectedSubMenu[i] === item?.SubMenuId"
-                (change)="onSubMenuChange(i, item.SubMenuId, item)"
-              />
-              {{ item?.Name | titlecase }}</label
-            >
-            @if (item?.Amount !== 0) {
-            <p>{{ item?.Amount }}</p>
-            }
-          </div>
-          }
-        </div>
-        } }
-      </div>
-      <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
-        </button> -->
-        <button
-          type="button"
-          class="btn btn-primary"
-          style="width: max-content"
-          data-bs-dismiss="modal"
-          aria-label="Close"
+      @for (items of list?.SubMenuHedaer ; track $index) {
+      <div class="list">
+        @if (list?.SelectorNumber === 1 ){
+        <label
+          ><input
+            type="radio"
+            name="submenu-{{ i }}"
+            [value]="items?.SubMenuId"
+            [checked]="isSelected(i, items?.SubMenuId)"
+            (change)="onSubMenuHeaderSelect(i, items)"
+          />
+          {{ items?.Name | titlecase }}</label
         >
-          Add to cart - {{ item?.Amount }}
-        </button>
+        } @else {
+        <label
+          ><input
+            type="checkbox"
+            [value]="items?.SubMenuId"
+            [checked]="isSelected(i, items?.SubMenuId)"
+            [disabled]="items.disabled"
+            (change)="onCheckboxChange(i, items, $event)"
+          />
+          {{ items?.Name | titlecase }}</label
+        >
+        } @if (items?.Amount !== 0) {
+        <p>{{ items?.Amount }}</p>
+        }
       </div>
       }
     </div>
-  </div>
-</div>
+    } } }
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <button
+      type="button"
+      class="btn btn-primary"
+      style="width: max-content"
+      (click)="submenuAddToCart()"
+    >
+      Add to cart - {{ totalSubmenuAmount }}
+    </button>
+  </ng-template>
+</nz-modal>

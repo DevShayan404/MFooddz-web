@@ -1,4 +1,9 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 import { SharingService } from './core/sharing-service/sharing.service';
 import { Subscription } from 'rxjs';
 
@@ -17,7 +22,6 @@ export class AppComponent {
     private cdr: ChangeDetectorRef
   ) {}
   ngOnInit(): void {
-
     this.getTimeZone();
     this.sharingService
       .getNavbarVisibility()
