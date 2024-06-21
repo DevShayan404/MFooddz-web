@@ -138,6 +138,7 @@ export class MenuComponent {
       }
     }
     localStorage.setItem('cartList', JSON.stringify(this.cartItems));
+    console.log(this.cartItems);
 
     // -----total amount-----
     this.totalAmount = this.cartItems.reduce(
@@ -172,13 +173,17 @@ export class MenuComponent {
     });
   }
   // //////////////////////////////////
-  onSubMenuHeaderSelect(subMenuIndex: number, subMenuHeader: any): void {
+  onSubMenuHeaderSelect(
+    subMenuIndex: number,
+    subMenuHeader: any,
+    subMenuId: number
+  ): void {
     const existingIndex = this.selectedSubMenu.findIndex(
       (item) => item.subMenuIndex === subMenuIndex
     );
 
     if (existingIndex === -1) {
-      this.selectedSubMenu.push({ subMenuIndex, subMenuHeader });
+      this.selectedSubMenu.push({ subMenuIndex, subMenuId, subMenuHeader });
     } else {
       this.selectedSubMenu[existingIndex].subMenuHeader = subMenuHeader;
     }
@@ -195,11 +200,13 @@ export class MenuComponent {
       : false;
   }
   ////////////////////////////////////
-  onCheckboxChange(subMenuIndex: number, subMenuHeader: any, event: any): void {
+  onCheckboxChange(
+    subMenuIndex: number,
+    subMenuHeader: any,
+    event: any,
+    subMenuId: number
+  ): void {
     const isChecked = event.target.checked;
-    const selectedSubmenu = this.selectedSubMenu.find(
-      (item) => item.subMenuIndex === subMenuIndex
-    );
 
     if (isChecked) {
       // If the checkbox is checked, deselect any previously selected items
@@ -208,7 +215,7 @@ export class MenuComponent {
       );
 
       // Add the newly selected item to selectedSubMenu
-      this.selectedSubMenu.push({ subMenuIndex, subMenuHeader });
+      this.selectedSubMenu.push({ subMenuIndex, subMenuId, subMenuHeader });
 
       // Disable other checkboxes in the same group
       this.disableOtherCheckboxes(subMenuIndex, subMenuHeader);
@@ -258,9 +265,39 @@ export class MenuComponent {
 
   submenuAddToCart(): void {
     if (this.selectedSubMenu.length > 0) {
-      console.log('Items added to cart:', this.selectedSubMenu);
+      const subMenuList = this.selectedSubMenu.map((item) => {
+        let matchingSubMenu = this.subMenuList[0].SubMenu.find(
+          (subMenu: any) => subMenu.SubMenuId === item.subMenuId
+        );
+        if (matchingSubMenu) {
+          // Create a deep copy of the matchingSubMenu to avoid modifying the original
+          let subMenuCopy = JSON.parse(JSON.stringify(matchingSubMenu));
+          subMenuCopy.SubMenuHedaer = null;
+          subMenuCopy.SubMenuHedaer = [item?.subMenuHeader];
+          return subMenuCopy;
+        }
+      });
+      const mainSubMenu = this.subMenuList.map((item) => item);
+      if (mainSubMenu) {
+        let mainSubMenuCopy = JSON.parse(JSON.stringify(mainSubMenu));
+        mainSubMenuCopy[0].SubMenu = null;
+        mainSubMenuCopy[0].SubMenu = [...subMenuList];
+        mainSubMenuCopy[0].Amount = this.totalSubmenuAmount;
+        this.cartItems.push(...mainSubMenuCopy);
+        console.log('X', this.cartItems);
+        localStorage.setItem('cartList', JSON.stringify(this.cartItems));
+        console.log(this.cartItems);
+
+        // -----total amount-----
+        this.totalAmount = this.cartItems.reduce(
+          (acc, amount) => acc + amount?.Amount,
+          0
+        );
+
+        this.closeModal();
+      }
     } else {
-      alert('1');
+      alert('please select submenu');
     }
   }
 

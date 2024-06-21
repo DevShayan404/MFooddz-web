@@ -228,6 +228,7 @@
     </div>
   </section>
 </main>
+
 <!-- Modal -->
 <nz-modal
   [nzStyle]="{ top: '20px' }"
@@ -267,7 +268,7 @@
             name="submenu-{{ i }}"
             [value]="items?.SubMenuId"
             [checked]="isSelected(i, items?.SubMenuId)"
-            (change)="onSubMenuHeaderSelect(i, items)"
+            (change)="onSubMenuHeaderSelect(i, items, list?.SubMenuId)"
           />
           {{ items?.Name | titlecase }}</label
         >
@@ -278,7 +279,7 @@
             [value]="items?.SubMenuId"
             [checked]="isSelected(i, items?.SubMenuId)"
             [disabled]="items.disabled"
-            (change)="onCheckboxChange(i, items, $event)"
+            (change)="onCheckboxChange(i, items, $event, list?.SubMenuId)"
           />
           {{ items?.Name | titlecase }}</label
         >
