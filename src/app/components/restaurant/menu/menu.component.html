@@ -177,12 +177,14 @@
               @for (item of restaurantData; track $index) {
               <span>Your cart from</span>
               <h5>{{ item?.StoreName }}</h5>
+              @if(!isVisibleCartDetail){
               <button class="btn btn-primary" (click)="routeToCheckout()">
                 <span>Checkout</span>
                 <span>{{ item?.Currency }} {{ totalAmount }}</span></button
-              >}
+              >}}
               <ul>
                 @for (item of cartItems; track $index) {
+                @if(!isVisibleCartDetail){
                 <li>
                   <div>
                     <nz-avatar
@@ -192,15 +194,15 @@
                     ></nz-avatar>
                   </div>
                   <div style="width: 100%; overflow: hidden">
-                    <p>
+                    <p style="text-align: start">
                       <b>{{ item?.Name }}</b>
                     </p>
                     <span> {{ item?.Description }}</span>
                     <div class="cart-button pt-3">
                       <p>
                         <!-- @if (item?.DiscountAmount != null) {
-                        <b class="me-2">{{ item?.DiscountAmount }}</b>
-                        } @else { -->
+                            <b class="me-2">{{ item?.DiscountAmount }}</b>
+                            } @else { -->
                         <b>{{ item?.Amount }}</b>
                         <!-- } -->
                       </p>
@@ -218,8 +220,62 @@
                     </div>
                   </div>
                 </li>
-                }
+                }@else {
+                <li>
+                  <div class="row g-0 w-100">
+                    <div class="col-2 g-0">
+                      <p
+                        style="
+                          width: max-content;
+                          background: #e5e5e5;
+                          padding: 0px 10px;
+                          border-radius: 2rem;
+                        "
+                      >
+                        <b style="font-weight: 600"
+                          >{{ item?.Quantity
+                          }}<i
+                            style="font-size: 14px"
+                            class="bi bi-chevron-down ms-1"
+                          ></i
+                        ></b>
+                      </p>
+                    </div>
+                    <div class="col-8 g-0">
+                      <p style="text-align: start">
+                        <b>{{ item?.Name }}</b>
+                      </p>
+                      <!-- <span> {{ item?.Description }}</span> -->
+                      @if (item?.SubMenuId !== null) { @for (list of
+                      item.SubMenu; track $index) {
+                      <p
+                        style="
+                          display: flex;
+                          align-items: center;
+                          gap: 4px;
+                          font-size: 14px;
+                        "
+                      >
+                        {{ list?.Name }} : @for (item of list?.SubMenuHedaer;
+                        track $index) {
+                        <span style="font-size: 14px">{{ item?.Name }}</span>
+                        }
+                      </p>
+                      } }
+                    </div>
+                    <div class="col-2 g-0 d-flex justify-content-end">
+                      <span>{{ item?.Amount }}</span>
+                    </div>
+                  </div>
+                </li>
+                } }
               </ul>
+              @if(isVisibleCartDetail){ @for (item of restaurantData; track
+              $index) {
+              <button class="btn btn-primary" (click)="routeToCheckout()">
+                <span>Checkout</span>
+                <span>{{ item?.Currency }} {{ totalAmount }}</span></button
+              >}}
             </div>
           </div>
           }

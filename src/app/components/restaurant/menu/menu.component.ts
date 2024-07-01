@@ -48,6 +48,9 @@ export class MenuComponent {
   selectedSubMenu: any[] = [];
   baseAmount: any;
   totalSubmenuAmount: any;
+  isVisibleCartDetail: boolean = false;
+  subMenuList!: any[];
+  isVisible = false;
   constructor(
     private router: Router,
     private sharingService: SharingService,
@@ -61,6 +64,7 @@ export class MenuComponent {
       this.sharingService.getRestauranList().subscribe({
         next: (res) => {
           const restaurantList = res;
+
           this.restaurantData = restaurantList.filter(
             (item) => item.Id === +shopId
           );
@@ -75,7 +79,15 @@ export class MenuComponent {
           this.restaurantMenu = JSON.parse(
             res?.Result?.Data
           ).ShopMenu[0]?.MenuCategory;
-          // console.log(this.restaurantMenu);
+          const shopData = [
+            {
+              ShopLocation: JSON.parse(res?.Result?.Data).ShopMenu[0]
+                ?.ShopLocation,
+              ShopFinancials: JSON.parse(res?.Result?.Data).ShopMenu[0]
+                ?.ShopFinancials,
+            },
+          ];
+          localStorage.setItem('shopData', JSON.stringify(shopData));
           this.getLocalStorageCartList();
         },
       });
@@ -92,7 +104,7 @@ export class MenuComponent {
     if (cartList) {
       // debugger;
       this.cartItems = cartList;
-      console.log(this.cartItems);
+      // console.log(this.cartItems);
 
       // -----total amount-----
       this.totalAmount = this.cartItems.reduce(
@@ -115,7 +127,9 @@ export class MenuComponent {
 
     if (existingItem) {
       existingItem.Quantity++;
-      if (existingItem?.DiscountAmount !== null) {
+      if (existingItem?.SubMenuId !== null) {
+        existingItem.Amount += data?.TotalAmount;
+      } else if (existingItem?.DiscountAmount !== null) {
         existingItem.Amount += data?.DiscountAmount;
       } else {
         existingItem.Amount += data?.BaseAmount;
@@ -138,7 +152,7 @@ export class MenuComponent {
       }
     }
     localStorage.setItem('cartList', JSON.stringify(this.cartItems));
-    console.log(this.cartItems);
+    // console.log(this.cartItems);
 
     // -----total amount-----
     this.totalAmount = this.cartItems.reduce(
@@ -148,8 +162,7 @@ export class MenuComponent {
   }
 
   // -----------Add submenu in cart --------------
-  subMenuList!: any[];
-  isVisible = false;
+
   getSubmenuData(data: any) {
     this.subMenuList = [];
     this.selectedSubMenu = [];
@@ -161,11 +174,24 @@ export class MenuComponent {
         const items = {
           ...data,
           Quantity: 1,
-          Amount: data?.BaseAmount,
+          Amount: 0,
+          TotalAmount: 0,
           SubMenu: submenuItems,
         };
         this.subMenuList = [items];
-        this.baseAmount = data?.BaseAmount;
+        if (data?.DiscountAmount !== null) {
+          if (data?.DiscountAmount % 1 !== 0) {
+            this.baseAmount = Math.floor(data?.DiscountAmount + 1);
+          } else {
+            this.baseAmount = data?.DiscountAmount;
+          }
+        } else {
+          if (data?.BaseAmount % 1 !== 0) {
+            this.baseAmount = Math.floor(data?.BaseAmount + 1);
+          } else {
+            this.baseAmount = data?.BaseAmount;
+          }
+        }
         this.calculateTotalAmount();
         this.openModal();
         // console.log(this.subMenuList);
@@ -283,10 +309,11 @@ export class MenuComponent {
         mainSubMenuCopy[0].SubMenu = null;
         mainSubMenuCopy[0].SubMenu = [...subMenuList];
         mainSubMenuCopy[0].Amount = this.totalSubmenuAmount;
+        mainSubMenuCopy[0].TotalAmount = this.totalSubmenuAmount;
         this.cartItems.push(...mainSubMenuCopy);
-        console.log('X', this.cartItems);
+        // console.log('X', this.cartItems);
         localStorage.setItem('cartList', JSON.stringify(this.cartItems));
-        console.log(this.cartItems);
+        // console.log(this.cartItems);
 
         // -----total amount-----
         this.totalAmount = this.cartItems.reduce(
@@ -316,7 +343,9 @@ export class MenuComponent {
     if (existingItemIndex !== -1) {
       const existingItem = this.cartItems[existingItemIndex];
       if (existingItem.Quantity > 1) {
-        if (existingItem?.DiscountAmount !== null) {
+        if (existingItem?.SubMenuId !== null) {
+          existingItem.Amount -= data?.TotalAmount;
+        } else if (existingItem?.DiscountAmount !== null) {
           existingItem.Amount -= data.DiscountAmount;
         } else {
           existingItem.Amount -= data.BaseAmount;
@@ -335,6 +364,18 @@ export class MenuComponent {
   }
 
   routeToCheckout() {
-    // this.router.navigate(['checkout/place-order']);
+    if (this.isVisibleCartDetail) {
+      const currentQueryParams = this.activatedRoute.snapshot.queryParams;
+      const newQueryParams = {
+        lat: currentQueryParams['lat'],
+        lng: currentQueryParams['lng'],
+      };
+      this.router.navigate(['checkout/place-order'], {
+        queryParams: newQueryParams,
+      });
+    } else {
+      this.isVisibleCartDetail = true;
+      // console.log(this.cartItems);
+    }
   }
 }

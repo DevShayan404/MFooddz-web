@@ -1,0 +1,125 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Add Payment Method"
+  (nzOnCancel)="paymentModalClose()"
+>
+  <div *nzModalContent>
+    <ul>
+      <li
+        class="d-flex justify-content-between align-items-center delivery-detail-list"
+        style="cursor: pointer"
+        (click)="addCreditOrDebitModalOpen()"
+      >
+        <div class="d-flex align-items-center">
+          <img width="30" src="assets\icons\atm-card.png" />
+          <p class="ms-2">Add credit or debit card</p>
+        </div>
+        <i class="bi bi-chevron-right"></i>
+      </li>
+      <li
+        class="d-flex justify-content-between align-items-center delivery-detail-list"
+      >
+        <div class="d-flex align-items-center">
+          <img width="30" src="assets\icons\cash.png" />
+          <p class="ms-2">Cash</p>
+        </div>
+        <input type="radio" />
+      </li>
+    </ul>
+  </div>
+  <div *nzModalFooter>
+    <button class="btn btn-primary">Done</button>
+  </div>
+</nz-modal>
+
+<nz-modal
+  [nzStyle]="{ top: '20px' }"
+  [(nzVisible)]="isVisibleaddCreditOrDebitModal"
+  nzTitle="Add credit or debit card"
+  (nzOnCancel)="addCreditOrDebitModalClose()"
+>
+  <div *nzModalContent>
+    <form [formGroup]="cardForm" (ngSubmit)="onSubmitCardForm()">
+      <div class="row">
+        <div class="col-12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24">Card Number</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+              <input
+                nz-input
+                formControlName="cardNumder"
+                placeholder="•••• •••• •••• ••••"
+                ccNumber
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-6">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24">Exp. Date</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+              <input
+                nz-input
+                formControlName="expDate"
+                placeholder="•• / ••"
+                ccExp
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-6">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24">Security Code</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+              <input
+                nz-input
+                formControlName="securityCode"
+                placeholder="•••"
+                ccCvc
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24">Country</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+              <nz-select
+                style="width: 100%"
+                [nzShowSearch]="true"
+                [nzShowArrow]="true"
+                [nzAllowClear]="false"
+                nzPlaceHolder="Select your country"
+                formControlName="country"
+              >
+                <nz-option
+                  *ngFor="let list of countryList"
+                  [nzLabel]="list?.country"
+                  [nzValue]="list?.country"
+                ></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24">Card Holder Name</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+              <input
+                nz-input
+                formControlName="cardHolderName"
+                placeholder="John"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div *nzModalFooter>
+    <button class="btn btn-primary" (click)="onSubmitCardForm()">
+      Add Card
+    </button>
+    <!-- <button class="btn btn-primary">Cancel</button> -->
+  </div>
+</nz-modal>

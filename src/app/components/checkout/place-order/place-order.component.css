@@ -18,12 +18,12 @@
   max-height: 100vh;
   overflow-y: scroll;
 }
-.checkout-left .delivery-detail-list {
+.delivery-detail-list {
   padding: 8px 0;
   border: 0;
   border-bottom: 1px solid var(--border-color);
 }
-.checkout-left .delivery-detail-list:last-child {
+.delivery-detail-list:last-child {
   border: 0;
   border-bottom: 0;
 }

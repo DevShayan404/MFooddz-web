@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { GoogleMap } from '@angular/google-maps';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-google-map',
@@ -51,20 +52,25 @@ export class GoogleMapComponent {
   dropoffMarkerOptions: google.maps.MarkerOptions | null = null;
   driverMarkerOptions: google.maps.MarkerOptions | null = null;
 
-  constructor() {}
+  constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.pickUp();
-    this.dropOff();
+    this.activatedRoute.queryParams.subscribe((params) => {
+      const customerLat = params['lat'];
+      const customerLng = params['lng'];
+      let shopDetail = JSON.parse(localStorage.getItem('shopData')!);
+      this.pickUp(customerLat, customerLng);
+      this.dropOff(shopDetail[0]?.ShopLocation);
+    });
   }
   ngAfterViewInit(): void {
     this.adjustMapBounds();
   }
 
-  pickUp() {
+  pickUp(lat: number, lng: number) {
     this.pickupCoordinates = {
-      lat: 24.808386436608135,
-      lng: 67.03950116601074,
+      lat: +lat,
+      lng: +lng,
     };
     this.mapCenter = {
       lat: this.pickupCoordinates.lat,
@@ -76,10 +82,10 @@ export class GoogleMapComponent {
     };
   }
 
-  dropOff() {
+  dropOff(shopLocation: any) {
     this.dropoffCoordinates = {
-      lat: 24.806092578603682,
-      lng: 67.02681522368127,
+      lat: +shopLocation[0]?.Latitude,
+      lng: +shopLocation[0]?.Longitude,
     };
     this.mapCenter = {
       lat: (this.pickupCoordinates.lat + this.dropoffCoordinates.lat) / 2,
@@ -113,8 +119,9 @@ export class GoogleMapComponent {
 
       // Set a slight delay to adjust the zoom after bounds are fitted
       setTimeout(() => {
-        const currentZoom = this.map.googleMap?.getZoom() ?? 14;
-        this.map.googleMap?.setZoom(currentZoom - 1);
+        const currentZoom = this.map.googleMap?.getZoom() ?? 18;
+        this.map.googleMap?.setZoom(currentZoom);
+        // this.map.googleMap?.setZoom(currentZoom - 1);
       }, 1000);
     }
   }

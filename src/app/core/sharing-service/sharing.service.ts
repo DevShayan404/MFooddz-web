@@ -46,4 +46,5 @@ export class SharingService {
   getRestauranList() {
     return this.restaurantList.asObservable();
   }
+
 }
