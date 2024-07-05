@@ -123,6 +123,7 @@ export class RestaurantComponent {
             if (component.types.includes('locality')) {
               this.sharingService.setCity(component.long_name);
               this.cityName = component.long_name;
+              localStorage.setItem('city', this.cityName);
               break;
             }
           }

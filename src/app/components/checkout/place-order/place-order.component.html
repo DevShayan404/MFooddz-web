@@ -13,15 +13,21 @@
             <div class="card w-100 mt-3">
               <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
-                  <h3>Delivery details</h3>
+                  <h3>{{ switchToSegmented }} details</h3>
                   <nz-segmented
                     [nzOptions]="options"
                     (nzValueChange)="handleIndexChange($event)"
                   ></nz-segmented>
                 </div>
+
                 <div class="mt-3">
-                  <app-google-map></app-google-map>
+                  <ng-container *ngIf="currentLocation">
+                    <app-google-map
+                      [userLocation]="currentLocation"
+                    ></app-google-map>
+                  </ng-container>
                 </div>
+                @if (switchToSegmented === 'Delivery') {
                 <div class="mt-3">
                   <ul>
                     <li
@@ -33,13 +39,18 @@
                           style="font-size: 24px"
                         ></i>
                         <div>
-                          <p><b>San Francisco</b></p>
-                          <span>CA</span>
+                          <p>
+                            <b>{{ currentLocation?.area }}</b>
+                          </p>
+                          <span style="max-width: 300px">{{
+                            currentLocation?.address
+                          }}</span>
                         </div>
                       </div>
                       <button
                         class="btn btn-primary"
                         style="width: max-content; border-radius: 2rem"
+                        (click)="addressModalOpen()"
                       >
                         Edit
                       </button>
@@ -68,15 +79,18 @@
                     </li>
                   </ul>
                 </div>
+                }
               </div>
               <hr />
+
+              @if (switchToSegmented !== 'Dine-in') {
               <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
-                  <h3>Delivery estimate</h3>
+                  <h3>{{ switchToSegmented }} estimate</h3>
                 </div>
                 <div class="mt-3">
                   <ul>
-                    <li class="delivery-estimate-list-active my-2">
+                    <!-- <li class="delivery-estimate-list-active my-2">
                       <div class="d-flex align-items-center">
                         <i
                           class="bi bi-lightning-charge-fill me-3"
@@ -99,8 +113,8 @@
                           <span>10 - 20 min. Delivered directly to you</span>
                         </div>
                       </div>
-                    </li>
-                    <li class="delivery-estimate-list my-2">
+                    </li> -->
+                    <li class="delivery-estimate-list-active my-2">
                       <div class="d-flex align-items-center">
                         <i
                           class="bi bi-patch-check-fill me-3"
@@ -112,7 +126,7 @@
                         </div>
                       </div>
                     </li>
-                    <li class="delivery-estimate-list my-2">
+                    <!-- <li class="delivery-estimate-list my-2">
                       <div class="d-flex align-items-center">
                         <i
                           class="bi bi-postcard-fill me-3"
@@ -123,11 +137,12 @@
                           <span>Select a time</span>
                         </div>
                       </div>
-                    </li>
+                    </li> -->
                   </ul>
                 </div>
               </div>
               <hr />
+              }
               <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
                   <h3>Payment</h3>
@@ -169,6 +184,7 @@
                       <button
                         class="btn btn-primary"
                         style="width: max-content; border-radius: 2rem"
+                        (click)="promoModalOpen()"
                       >
                         Add
                       </button>
@@ -183,6 +199,7 @@
                   <button
                     class="btn btn-primary"
                     style="width: max-content; border-radius: 2rem"
+                    (click)="routeToMenuPage()"
                   >
                     <i class="bi bi-plus"></i>
                     Add Items
@@ -323,12 +340,16 @@
                     <span>Subtotal</span>
                     <p>{{ currency }} {{ subTotal }}</p>
                   </li>
-                  <li
+                  @if(discountAmount !== 0){
+                    <li
                     class="d-flex align-items-center justify-content-between pt-2"
                   >
                     <span>Discount</span>
                     <p>{{ currency }} -{{ discountAmount }}</p>
                   </li>
+                  }
+                 
+                  @if (switchToSegmented === 'Delivery') {
                   <li
                     class="d-flex align-items-center justify-content-between pt-2"
                   >
@@ -337,6 +358,7 @@
                     ></span>
                     <p>{{ currency }} {{ deliveryFee }}</p>
                   </li>
+                  }
                   <li
                     class="d-flex align-items-center justify-content-between pt-2"
                   >
@@ -402,3 +424,19 @@
   (close)="paymentModalClose()"
 ></app-payment-modal>
 }
+<!-- ========== Address Modal ========== -->
+@if (isVisibleAddressModal) {
+<app-address-modal
+  [isVisible]="isVisibleAddressModal"
+  [currentLocation]="currentLocation"
+  (close)="addressModalClose()"
+  (changedLocation)="changedLocation($event)"
+></app-address-modal
+>}
+<!-- ========== Address Modal ========== -->
+@if (isVisiblePromoModal) {
+<app-promo-modal
+  [isVisible]="isVisiblePromoModal"
+  (close)="promoModalClose()"
+></app-promo-modal
+>}

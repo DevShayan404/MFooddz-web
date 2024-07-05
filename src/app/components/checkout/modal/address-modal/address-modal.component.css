@@ -1,0 +1,56 @@
+.delivery-detail-list {
+  padding: 10px 0;
+  border: 0;
+  border-bottom: 1px solid var(--border-color);
+}
+.delivery-detail-list:last-child {
+  border: 0;
+  border-bottom: 0;
+}
+/* ///////////////form input////////////// */
+.ant-form-item {
+  margin-bottom: 10px;
+}
+/* ::ng-deep.ant-form-item-control-input-content {
+  display: flex;
+  align-items: center;
+  background: #eeeeee;
+  border-radius: 5px;
+} */
+.ant-col-24.ant-form-item-label {
+  padding: 0;
+}
+.ant-input {
+  padding: 6px 11px;
+  background-color: #eeeeee;
+  border: 1px solid #eeeeee;
+  border-radius: 5px;
+}
+.ant-input-status-error:not(.ant-input-disabled):not(
+    .ant-input-borderless
+  ).ant-input,
+.ant-input-status-error:not(.ant-input-disabled):not(
+    .ant-input-borderless
+  ).ant-input:hover {
+  background: #eeeeee;
+  border-color: #ff4d4f;
+}
+
+::ng-deep.ant-select-single:not(.ant-select-customize-input)
+  .ant-select-selector {
+  height: 38px;
+  border-radius: 5px;
+  border: 1px solid #eeeeee;
+  padding: 3px 11px;
+  background: #eeee;
+}
+::ng-deep.ant-select-focused:not(.ant-select-disabled).ant-select:not(
+    .ant-select-customize-input
+  )
+  .ant-select-selector {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 2px rgb(241, 107, 42, 0.2);
+}
+::ng-deep.ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+  border-color: #eeeeee;
+}

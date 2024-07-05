@@ -34,9 +34,11 @@ export class RestaurantListComponent {
 
   routeToMenu(id: number) {
     const checkMenuId = JSON.parse(localStorage.getItem('restaurantList')!);
-    const isExistMenuId = checkMenuId.find((x: any) => x.Id === id);
-    if (!isExistMenuId) {
-      localStorage.removeItem('cartList');
+    if (checkMenuId) {
+      const isExistMenuId = checkMenuId.find((x: any) => x.Id === id);
+      if (!isExistMenuId) {
+        localStorage.removeItem('cartList');
+      }
     }
     const currentQueryParams = this.activatedRoute.snapshot.queryParams;
     const newQueryParams = { ...currentQueryParams, menuId: id };

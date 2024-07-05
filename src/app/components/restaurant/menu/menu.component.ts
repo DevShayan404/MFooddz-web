@@ -365,13 +365,8 @@ export class MenuComponent {
 
   routeToCheckout() {
     if (this.isVisibleCartDetail) {
-      const currentQueryParams = this.activatedRoute.snapshot.queryParams;
-      const newQueryParams = {
-        lat: currentQueryParams['lat'],
-        lng: currentQueryParams['lng'],
-      };
       this.router.navigate(['checkout/place-order'], {
-        queryParams: newQueryParams,
+        queryParams: this.activatedRoute.snapshot.queryParams,
       });
     } else {
       this.isVisibleCartDetail = true;

@@ -39,7 +39,7 @@
   (nzOnCancel)="addCreditOrDebitModalClose()"
 >
   <div *nzModalContent>
-    <form [formGroup]="cardForm" (ngSubmit)="onSubmitCardForm()">
+    <form [formGroup]="cardForm" (ngSubmit)="onSubmit()">
       <div class="row">
         <div class="col-12">
           <nz-form-item>
@@ -115,10 +115,35 @@
         </div>
       </div>
     </form>
+    @if(cardResponse?.Code === '00'){
+    <div class="alert alert-success alert-dismissible" role="alert">
+      {{ cardResponse?.Message }}
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+    }@else if (cardResponse?.Code === '01' || cardResponse?.Code === '11') {
+    <div class="alert alert-danger alert-dismissible" role="alert">
+      {{ cardResponse?.Message }}
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+    }
   </div>
   <div *nzModalFooter>
-    <button class="btn btn-primary" (click)="onSubmitCardForm()">
-      Add Card
+    <button class="btn btn-primary" (click)="onSubmit()">
+      Add Card @if (spinner) {
+      <div class="spinner-grow spinner-grow-sm ms-2" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      }
     </button>
     <!-- <button class="btn btn-primary">Cancel</button> -->
   </div>

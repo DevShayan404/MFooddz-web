@@ -1,4 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import {
+  Component,
+  Input,
+  SimpleChanges,
+  ViewChild,
+  OnChanges,
+} from '@angular/core';
 import { GoogleMap } from '@angular/google-maps';
 import { ActivatedRoute } from '@angular/router';
 
@@ -9,6 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class GoogleMapComponent {
   @ViewChild(GoogleMap) map!: GoogleMap;
+  @Input() userLocation!: any;
 
   driverDetail!: any[];
   trackingDetail!: any[];
@@ -59,18 +66,27 @@ export class GoogleMapComponent {
       const customerLat = params['lat'];
       const customerLng = params['lng'];
       let shopDetail = JSON.parse(localStorage.getItem('shopData')!);
-      this.pickUp(customerLat, customerLng);
-      this.dropOff(shopDetail[0]?.ShopLocation);
+      this.pickUp(shopDetail[0]?.ShopLocation);
+      this.dropOff(this.userLocation);
+      console.log(this.userLocation);
     });
   }
   ngAfterViewInit(): void {
     this.adjustMapBounds();
   }
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['userLocation'] && changes['userLocation'].currentValue) {
+      this.dropOff(changes['userLocation'].currentValue);
+      if (this.map) {
+        this.adjustMapBounds();
+      }
+    }
+  }
 
-  pickUp(lat: number, lng: number) {
+  pickUp(shopLocation: any) {
     this.pickupCoordinates = {
-      lat: +lat,
-      lng: +lng,
+      lat: +shopLocation[0]?.Latitude,
+      lng: +shopLocation[0]?.Longitude,
     };
     this.mapCenter = {
       lat: this.pickupCoordinates.lat,
@@ -82,10 +98,10 @@ export class GoogleMapComponent {
     };
   }
 
-  dropOff(shopLocation: any) {
+  dropOff(userLocation: any) {
     this.dropoffCoordinates = {
-      lat: +shopLocation[0]?.Latitude,
-      lng: +shopLocation[0]?.Longitude,
+      lat: userLocation.lat,
+      lng: userLocation.lng,
     };
     this.mapCenter = {
       lat: (this.pickupCoordinates.lat + this.dropoffCoordinates.lat) / 2,

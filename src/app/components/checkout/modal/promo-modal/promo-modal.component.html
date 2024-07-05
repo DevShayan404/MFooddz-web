@@ -1,0 +1,30 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Promotions"
+  (nzOnCancel)="PromoModalClose()"
+>
+  <div *nzModalContent>
+    <form class="d-flex mb-3" [formGroup]="promoForm" (ngSubmit)="onSubmit()">
+      <input
+        class="form-control"
+        placeholder="Enter promo code"
+        formControlName="promo"
+      />
+      <span><i class="bi bi-exclamation-circle"></i>hello</span>
+      <button
+        class="btn ms-2"
+        style="width: max-content; font-size: 14px"
+        [ngClass]="
+          promoForm.controls['promo'].invalid ? 'btn-secondary' : 'btn-primary '
+        "
+      >
+        Apply
+      </button>
+    </form>
+  </div>
+  <div *nzModalFooter>
+    <button class="btn btn-primary" (nzOnCancel)="PromoModalClose()">
+      Done
+    </button>
+  </div>
+</nz-modal>

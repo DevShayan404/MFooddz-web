@@ -57,6 +57,13 @@ strong {
   text-overflow: ellipsis;
   max-width: 100%;
 }
+/* h6 {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+} */
 span {
   color: var(--light-gray);
   font-size: 14px;
