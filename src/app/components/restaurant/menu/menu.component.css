@@ -217,3 +217,22 @@
   width: 100%;
   margin-top: 50px;
 }
+/* ///////////////////////// */
+.modal-skeleton ::ng-deep.ant-skeleton-element {
+  width: 100%;
+}
+.modal-skeleton ::ng-deep.ant-skeleton-element .ant-skeleton-input-lg {
+  width: 90%;
+}
+.modal-skeleton ::ng-deep.ant-skeleton-element .ant-skeleton-input-sm {
+  height: 18px;
+}
+.modal-skeleton ::ng-deep.ant-skeleton-element .ant-skeleton-image {
+  width: 100%;
+  height: 300px;
+  border-radius: 8px;
+}
+.modal-skeleton ::ng-deep.list.ant-skeleton-element .ant-skeleton-input-sm {
+  height: 14px;
+  width: 100%;
+}

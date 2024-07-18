@@ -172,8 +172,10 @@ export class MenuComponent {
   }
 
   // -----------Add submenu in cart --------------
-
+  modalSkeleton: boolean = false;
   getSubmenuData(data: any) {
+    this.modalSkeleton = true;
+    this.openModal();
     this.subMenuList = [];
     this.selectedSubMenu = [];
 
@@ -203,7 +205,7 @@ export class MenuComponent {
           }
         }
         this.calculateTotalAmount();
-        this.openModal();
+        this.modalSkeleton = false;
         // console.log(this.subMenuList);
       },
     });

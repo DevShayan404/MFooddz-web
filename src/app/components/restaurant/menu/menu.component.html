@@ -301,7 +301,56 @@
   (nzOnCancel)="closeModal()"
 >
   <ng-template #modalContent>
-    @for (item of subMenuList; track $index) {
+    @if (modalSkeleton) {
+    <div class="modal-skeleton d-flex flex-column">
+      <nz-skeleton-element
+        nzType="input"
+        [nzActive]="true"
+        [nzSize]="'large'"
+      ></nz-skeleton-element>
+      <nz-skeleton-element
+        class="mt-2"
+        nzType="input"
+        [nzActive]="true"
+        [nzSize]="'small'"
+      ></nz-skeleton-element>
+      <nz-skeleton-element
+        class="mt-3"
+        nzType="image"
+        [nzActive]="true"
+      ></nz-skeleton-element>
+      <nz-skeleton-element
+        class="mt-3"
+        nzType="input"
+        [nzActive]="true"
+        [nzSize]="'small'"
+      ></nz-skeleton-element>
+      <nz-skeleton-element
+        class="mt-2"
+        nzType="input"
+        [nzActive]="true"
+        [nzSize]="'small'"
+      ></nz-skeleton-element>
+      <nz-skeleton-element
+        class="mt-3 list"
+        nzType="input"
+        [nzActive]="true"
+        [nzSize]="'small'"
+      ></nz-skeleton-element>
+      <nz-skeleton-element
+        class="list"
+        nzType="input"
+        [nzActive]="true"
+        [nzSize]="'small'"
+      ></nz-skeleton-element>
+      <nz-skeleton-element
+        class="list"
+        nzType="input"
+        [nzActive]="true"
+        [nzSize]="'small'"
+      ></nz-skeleton-element>
+    </div>
+    }@else { @for (item of subMenuList; track $index) {
     <h3>{{ item?.Name | titlecase }}</h3>
     <p>
       {{ item?.Description }}
@@ -353,7 +402,7 @@
       </div>
       }
     </div>
-    } } }
+    } } }}
   </ng-template>
 
   <ng-template #modalFooter>
