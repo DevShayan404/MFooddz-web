@@ -81,9 +81,11 @@ export class RestaurantComponent {
   headerList!: any;
   bannerList!: any;
   cityName!: string;
+  loading: boolean = false;
   ngOnInit(): void {
+    this.loading = true;
     this.sharingService.showFooter(false);
-
+    this.sharingService.showNavbar(true);
     this.activatedRoute.queryParams.subscribe((params) => {
       const lat = params['lat'];
       const lng = params['lng'];
@@ -96,6 +98,7 @@ export class RestaurantComponent {
           this.headerList = header[0]?.Banner;
           const banner = [JSON.parse(res?.Result?.Data)?.Categories];
           this.bannerList = banner[0]?.Category;
+          this.loading = false;
         },
       });
 

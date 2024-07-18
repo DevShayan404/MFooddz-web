@@ -1,5 +1,7 @@
 <div class="container g-0 section_padding">
   <div class="row g-0">
+    @if (loading) {
+    <app-skeleton-restaurant></app-skeleton-restaurant>}@else {
     <div class="col">
       <h1 class="d-flex align-items-center">
         Food Delivery Restaurants in
@@ -50,5 +52,6 @@
       </div>
       }
     </div>
+    }
   </div>
 </div>

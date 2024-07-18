@@ -16,19 +16,32 @@ export class RestaurantListComponent {
   constructor(
     private router: Router,
     private sharingService: SharingService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private service: RestaurantService
   ) {}
-
+  loading: boolean = false;
   ngOnInit(): void {
-    this.sharingService.getRestauranList().subscribe({
-      next: (res) => {
-        this.restaurantList = res;
-      },
-    });
-    this.sharingService.getCity().subscribe({
-      next: (res) => {
-        this.cityName = res;
-      },
+    this.loading = true;
+    this.activatedRoute.queryParams.subscribe((params) => {
+      const lat = params['lat'];
+      const lng = params['lng'];
+      const countryCode = params['countryCode'];
+      const custId = localStorage.getItem('custId');
+
+      this.service.getRestaurants(lat, lng, countryCode, custId).subscribe({
+        next: (res: any) => {
+          this.restaurantList = JSON.parse(
+            res?.Result?.Data
+          ).Shops[0].AllRestaurants;
+          // this.sharingService.setRestauranList(this.restaurantList);
+          this.loading = false;
+        },
+      });
+      this.sharingService.getCity().subscribe({
+        next: (res) => {
+          this.cityName = res;
+        },
+      });
     });
   }
 

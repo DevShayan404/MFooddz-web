@@ -67,4 +67,16 @@ export class CheckoutService {
       `https://api.m-rides.com/api/MRide/CouponValidation?CustomerId=${this.custId}&rideTypeId=${rideType}&CouponNumber=${promoCode}`
     );
   }
+
+  placeOrder(data: any): Observable<any> {
+    const body = this.encodeFormData(data);
+    return this.http.post(
+      'https://api.m-rides.com/api/MFoodz/CustomerOrderingMFoodz',
+      body,
+      {
+        headers: this.headers,
+        responseType: 'json',
+      }
+    );
+  }
 }

@@ -11,7 +11,7 @@ import { CheckoutService } from '../../service/checkout.service';
 export class PromoModalComponent {
   @Input() isVisible!: boolean;
   @Output() close = new EventEmitter<void>();
-
+  @Output() applyCoupon = new EventEmitter<void>();
   promoForm!: FormGroup;
   constructor(
     private fb: FormBuilder,
@@ -27,6 +27,7 @@ export class PromoModalComponent {
   PromoModalClose() {
     this.close.emit();
   }
+  promoCodeResponse: any;
   onSubmit() {
     if (this.promoForm.valid) {
       const countryCode =
@@ -37,7 +38,11 @@ export class PromoModalComponent {
           .getPromoCode(rideTypeId, this.promoForm.value.promo)
           .subscribe({
             next: (res) => {
-              console.log(res?.Message);
+              this.promoCodeResponse = res?.Result;
+              if (this.promoCodeResponse?.Code === '00') {
+                this.applyCoupon.emit(this.promoCodeResponse);
+                this.PromoModalClose();
+              }
               this.promoForm.reset();
             },
           });
@@ -47,7 +52,11 @@ export class PromoModalComponent {
           .getPromoCode(rideTypeId, this.promoForm.value.promo)
           .subscribe({
             next: (res) => {
-              console.log(res?.Message);
+              this.promoCodeResponse = res?.Result;
+              if (this.promoCodeResponse?.Code === '00') {
+                this.applyCoupon.emit(this.promoCodeResponse);
+                this.PromoModalClose();
+              }
               this.promoForm.reset();
             },
           });

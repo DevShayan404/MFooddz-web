@@ -10,7 +10,7 @@
         placeholder="Enter promo code"
         formControlName="promo"
       />
-      <span><i class="bi bi-exclamation-circle"></i>hello</span>
+
       <button
         class="btn ms-2"
         style="width: max-content; font-size: 14px"
@@ -21,6 +21,15 @@
         Apply
       </button>
     </form>
+    @if (promoCodeResponse?.Code == 00) {
+    <div class="alert alert-success" role="alert">
+      {{ promoCodeResponse?.Message }}
+    </div>
+    }@else if(promoCodeResponse?.Code == 11) {
+    <div class="alert alert-danger" role="alert">
+      {{ promoCodeResponse?.Message }}
+    </div>
+    }
   </div>
   <div *nzModalFooter>
     <button class="btn btn-primary" (nzOnCancel)="PromoModalClose()">

@@ -18,14 +18,19 @@ export class HomeService {
   }
   getCurrentLocation(latlng: any): Observable<any> {
     return this.http.get(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latlng}&key=AIzaSyBoggmNYAGO4585YCVDhYsQOrr_YLl_pYs`
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latlng}&key=${this.APIKey}`
     );
   }
-  // //////////////////////
 
   getAddress(latitude: number, longitude: number) {
     return this.http.get(
       `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+    );
+  }
+
+  getRestaurants(countryCode: number) {
+    return this.http.get(
+      `https://api.m-rides.com/api/MRide/GetResturant?Country=${countryCode}`
     );
   }
 }

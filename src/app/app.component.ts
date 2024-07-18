@@ -2,6 +2,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  HostListener,
   ViewChild,
 } from '@angular/core';
 import { SharingService } from './core/sharing-service/sharing.service';
@@ -40,10 +41,12 @@ export class AppComponent {
     const timeZoneInHours = (timeZone / 60) * -1;
     if (timeZoneInHours === 5) {
       this.sharingService.setCountry('PK');
-      console.log('PK');
+      localStorage.setItem('countryCode', '92');
+      // console.log('PK');
     } else {
       this.sharingService.setCountry('CA');
-      console.log('CA');
+      localStorage.setItem('countryCode', '1');
+      // console.log('CA');
     }
   }
 }

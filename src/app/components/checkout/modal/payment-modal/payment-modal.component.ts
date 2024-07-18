@@ -3,6 +3,7 @@ import { CheckoutService } from '../../service/checkout.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CreditCard, CreditCardValidators } from 'angular-cc-library';
 import { defer } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-payment-modal',
@@ -12,36 +13,52 @@ import { defer } from 'rxjs';
 export class PaymentModalComponent {
   @Input() isVisible!: boolean;
   @Output() close = new EventEmitter<void>();
+  @Output() PaymentData = new EventEmitter<void>();
   isVisibleaddCreditOrDebitModal: boolean = false;
   countryList!: any[];
   cardForm!: FormGroup;
   cardResponse: any;
   spinner!: boolean;
   savedCardList!: any[];
-  constructor(private service: CheckoutService, private fb: FormBuilder) {}
+  countryCode!: number;
+  constructor(
+    private service: CheckoutService,
+    private fb: FormBuilder,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.service.getSavedCard().subscribe({
-      next: (res: any) => {
-        this.savedCardList = res?.Result?.cardList;
-        console.log(this.savedCardList);
-      },
-    });
-    this.cardForm = this.fb.group({
-      cardNumder: ['', [CreditCardValidators.validateCCNumber]],
-      expDate: ['', [CreditCardValidators.validateExpDate]],
-      securityCode: [
-        '',
-        [Validators.required, Validators.minLength(3), Validators.maxLength(3)],
-      ],
-      country: ['', Validators.required],
-      cardHolderName: ['', Validators.required],
-    });
-    this.service.getCountries().subscribe({
-      next: (res: any) => {
-        this.countryList = res?.data;
-        this.cardForm.get('country')?.setValue('Canada');
-      },
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.countryCode = +params['countryCode'];
+      console.log(this.countryCode);
+      if (this.countryCode !== 92) {
+        this.service.getSavedCard().subscribe({
+          next: (res: any) => {
+            this.savedCardList = res?.Result?.cardList;
+            console.log(this.savedCardList);
+          },
+        });
+        this.cardForm = this.fb.group({
+          cardNumder: ['', [CreditCardValidators.validateCCNumber]],
+          expDate: ['', [CreditCardValidators.validateExpDate]],
+          securityCode: [
+            '',
+            [
+              Validators.required,
+              Validators.minLength(3),
+              Validators.maxLength(3),
+            ],
+          ],
+          country: ['', Validators.required],
+          cardHolderName: ['', Validators.required],
+        });
+        this.service.getCountries().subscribe({
+          next: (res: any) => {
+            this.countryList = res?.data;
+            this.cardForm.get('country')?.setValue('Canada');
+          },
+        });
+      }
     });
   }
 
@@ -88,5 +105,13 @@ export class PaymentModalComponent {
         }
       });
     }
+  }
+  paymentData: any;
+  onSelect(data: any) {
+    this.paymentData = data;
+  }
+  submitPaymentData() {
+    this.PaymentData.emit(this.paymentData);
+    this.paymentModalClose();
   }
 }

@@ -1,0 +1,17 @@
+.skeleton::ng-deep.ant-skeleton-element {
+  display: inline-block;
+  width: 100%;
+}
+.skeleton::ng-deep.ant-skeleton-element .ant-skeleton-input-lg {
+  width: 60%;
+}
+.skeleton::ng-deep.ant-skeleton-element .ant-skeleton-image {
+  width: 100%;
+  height: 200px;
+  border-radius: 5px;
+  margin: 0 0 15px 0;
+}
+.skeleton::ng-deep.ant-skeleton-element .ant-skeleton-input-sm {
+  width: 100%;
+  height: 14px;
+}

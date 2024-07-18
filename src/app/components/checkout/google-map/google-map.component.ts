@@ -68,7 +68,7 @@ export class GoogleMapComponent {
       let shopDetail = JSON.parse(localStorage.getItem('shopData')!);
       this.pickUp(shopDetail[0]?.ShopLocation);
       this.dropOff(this.userLocation);
-      console.log(this.userLocation);
+      // console.log(this.userLocation);
     });
   }
   ngAfterViewInit(): void {

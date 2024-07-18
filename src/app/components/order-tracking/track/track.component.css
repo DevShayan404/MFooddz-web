@@ -1,0 +1,65 @@
+hr {
+  margin: 15px 0;
+  width: 100%;
+}
+b,
+h5 {
+  font-weight: 600;
+}
+.main {
+  position: relative;
+}
+.main .container {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
+}
+.border-left {
+  border: 0;
+  border-right: 1px solid var(--border-color);
+}
+/* ------------Timeline-------------- */
+.stepper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 15px 0 60px 0;
+}
+
+.step {
+  padding: 5px 12px;
+  /* background-color: rgb(207, 207, 207); */
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.step i {
+  font-size: 26px;
+  color: #fff;
+}
+.step p {
+  position: absolute;
+  bottom: -50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  text-align: center;
+  font-size: 14px;
+}
+
+.progress-bar {
+  flex-grow: 1;
+  height: 3px;
+  background-color: lightgray;
+}
+
+.progress-bar.active {
+  background-color: var(--orange);
+}

@@ -1,0 +1,44 @@
+<div class="col skeleton">
+  <!-- <h1 class="d-flex align-items-center">Food Delivery Restaurants in</h1> -->
+  <nz-skeleton-element
+    nzType="input"
+    [nzActive]="true"
+    [nzSize]="'large'"
+  ></nz-skeleton-element>
+
+  <div class="row gy-5 mt-3">
+    @for (item of restaurantList ; track $index) {
+    <div class="col-3">
+      <div class="restaurant_card">
+        <nz-skeleton-element
+          nzType="image"
+          [nzActive]="true"
+        ></nz-skeleton-element>
+        <div class="restaurant_card_content">
+          <nz-skeleton-element
+            nzType="input"
+            [nzActive]="true"
+            [nzSize]="'small'"
+          ></nz-skeleton-element>
+          <nz-skeleton-element
+            nzType="input"
+            [nzActive]="true"
+            [nzSize]="'small'"
+          ></nz-skeleton-element>
+          <nz-skeleton-element
+            nzType="input"
+            [nzActive]="true"
+            [nzSize]="'small'"
+            style="width: 40%;"
+          ></nz-skeleton-element>
+          <nz-skeleton-element
+          nzType="input"
+          [nzActive]="true"
+          [nzSize]="'small'"
+        ></nz-skeleton-element>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>

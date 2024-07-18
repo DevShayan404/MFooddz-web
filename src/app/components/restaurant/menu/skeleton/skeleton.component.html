@@ -1,0 +1,83 @@
+<!-- ////////////////////////menu links//////////////////////// -->
+<div class="container">
+  <div class="row pt-5 pb-2">
+    <div class="col-12">
+      <owl-carousel-o [options]="customOptionsMenuLinks" class="menu-links">
+        <ng-container *ngFor="let slide of restaurantMenu">
+          <ng-template carouselSlide>
+            <div class="tabs">
+              <nz-skeleton-element
+                nzType="input"
+                [nzActive]="true"
+                [nzSize]="'small'"
+              ></nz-skeleton-element>
+            </div>
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+    </div>
+  </div>
+</div>
+<!-- ////////////////////////menu cards//////////////////////// -->
+<div class="nav-card-section pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="row gy-4">
+          <h1 class="pt-5">
+            <nz-skeleton-element
+              nzType="input"
+              [nzActive]="true"
+              [nzSize]="'large'"
+            ></nz-skeleton-element>
+          </h1>
+          @for (list of restaurantMenu ; track $index) {
+          <div class="col-4">
+            <div class="card">
+              <div class="card-body">
+                <div>
+                  <nz-skeleton-element
+                    nzType="image"
+                    [nzActive]="true"
+                  ></nz-skeleton-element>
+                </div>
+                <div class="menu-content">
+                  <p style="text-align: start">
+                    <nz-skeleton-element
+                      nzType="input"
+                      [nzActive]="true"
+                      [nzSize]="'small'"
+                    ></nz-skeleton-element>
+                  </p>
+                  <p class="pt-2">
+                    <nz-skeleton-element
+                      nzType="input"
+                      [nzActive]="true"
+                      [nzSize]="'small'"
+                    ></nz-skeleton-element>
+                  </p>
+                  <div class="add-button pt-4">
+                    <p>
+                      <nz-skeleton-element
+                        nzType="button"
+                        [nzActive]="true"
+                        [nzSize]="'small'"
+                      ></nz-skeleton-element>
+                    </p>
+
+                    <nz-skeleton-element
+                      nzType="avatar"
+                      [nzActive]="true"
+                      [nzSize]="'small'"
+                    ></nz-skeleton-element>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

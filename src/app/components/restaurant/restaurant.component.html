@@ -1,5 +1,7 @@
 <main class="section_top_padding">
   <header>
+    @if (loading) {
+    <app-skeleton-header></app-skeleton-header>}@else {
     <section>
       <div class="header_top_main">
         <div class="container g-0">
@@ -7,11 +9,6 @@
             <owl-carousel-o [options]="customOptions">
               <ng-container *ngFor="let slide of headerList">
                 <ng-template carouselSlide [id]="slide.id">
-                  <!-- <img
-                    [src]="slide?.BannerImage"
-                    alt=""
-                    style="height: 150px"
-                  /> -->
                   <div class="header_list_top">
                     <nz-avatar [nzSrc]="slide?.ImageUrl"></nz-avatar>
                     <p>{{ slide?.BannerName | titlecase }}</p>
@@ -48,6 +45,7 @@
         </div>
       </div>
     </section>
+    }
     <hr />
   </header>
   <section>

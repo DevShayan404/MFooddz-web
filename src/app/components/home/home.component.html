@@ -37,11 +37,29 @@
                   [nzValue]="list?.Coordinates"
                 ></nz-option>
               </nz-select>
+              @if (!spinner) {
               <i
                 style="cursor: pointer"
                 class="bi bi-crosshair2"
                 (click)="getCurrentLocation()"
-              ></i>
+              ></i
+              >}@else {
+              <div
+                style="
+                  position: absolute;
+                  top: 62%;
+                  right: 0;
+                  transform: translate(-10px, -50%);
+                  z-index: 1;
+                  color: var(--orange);
+                "
+              >
+                <div class="spinner-grow spinner-grow-sm" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+
+              }
             </div>
           </nz-form-control>
         </nz-form-item>
@@ -117,11 +135,11 @@
           There's something for everyone!
         </h1>
         <div class="row">
-          @for (item of promoList; track $index) {
+          @for (item of popularRestaurant; track $index) {
           <div class="col-3 gy-2">
             <div class="restaurant_card">
-              <img src="assets\images\promoCardmg.jpg" alt="" />
-              <span class="promo">promo</span>
+              <img [src]="item?.ShopImage" alt="" />
+              <span class="promo">popular</span>
             </div>
           </div>
           }

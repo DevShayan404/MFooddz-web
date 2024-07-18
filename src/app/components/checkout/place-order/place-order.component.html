@@ -149,6 +149,21 @@
                 </div>
                 <div class="mt-3">
                   <ul>
+                    @if (this.paymentId === 1) {
+                    <li
+                      class="d-flex align-items-center justify-content-between delivery-detail-list"
+                    >
+                      <div class="d-flex align-items-center">
+                        <i
+                          class="bi bi-credit-card-2-back-fill me-3"
+                          style="font-size: 24px"
+                        ></i>
+                        <div>
+                          <p><b>Cash on delivery</b></p>
+                        </div>
+                      </div>
+                    </li>
+                    }@else if (this.paymentId === 2) {
                     <li
                       class="d-flex align-items-center justify-content-between delivery-detail-list"
                     >
@@ -169,6 +184,8 @@
                         Add
                       </button>
                     </li>
+                    }
+
                     <li
                       class="d-flex align-items-center justify-content-between delivery-detail-list"
                     >
@@ -211,7 +228,7 @@
                       class="d-flex align-items-center justify-content-between"
                     >
                       <p>
-                        <b>{{ cartData.length }} item</b>
+                        <b>{{ cartData?.length }} item</b>
                       </p>
                       <i
                         class="bi bi-chevron-down"
@@ -300,11 +317,20 @@
         </div>
         <div class="col-4 py-4">
           <div class="checkout-right">
-            <button class="btn btn-primary">Continue to payment</button>
+            <button class="btn btn-primary" (click)="placeOrder()">
+              Continue to payment @if (placeOrderSpinner) {
+              <div class="spinner-border spinner-border-sm ms-2" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              }
+            </button>
+            <!-- <div class="alert alert-danger" role="alert">
+              A simple danger alert—check it out!
+            </div> -->
             <div class="card my-3">
               <div class="card-body">
                 <h3>Order total</h3>
-                <div
+                <!-- <div
                   class="d-flex mt-3"
                   style="
                     background-color: #fff2d9;
@@ -332,7 +358,7 @@
                       nzSrc="assets\images\activeOrder.webp"
                     ></nz-avatar>
                   </div>
-                </div>
+                </div> -->
                 <ul class="pt-3">
                   <li
                     class="d-flex align-items-center justify-content-between pt-2"
@@ -341,15 +367,13 @@
                     <p>{{ currency }} {{ subTotal }}</p>
                   </li>
                   @if(discountAmount !== 0){
-                    <li
+                  <li
                     class="d-flex align-items-center justify-content-between pt-2"
                   >
                     <span>Discount</span>
                     <p>{{ currency }} -{{ discountAmount }}</p>
                   </li>
-                  }
-                 
-                  @if (switchToSegmented === 'Delivery') {
+                  } @if (switchToSegmented === 'Delivery') {
                   <li
                     class="d-flex align-items-center justify-content-between pt-2"
                   >
@@ -438,5 +462,6 @@
 <app-promo-modal
   [isVisible]="isVisiblePromoModal"
   (close)="promoModalClose()"
+  (applyCoupon)="applyCoupon($event)"
 ></app-promo-modal
 >}

@@ -9,18 +9,20 @@ export class NavbarComponent {
   scrolled: boolean = false;
   firstName!: string | null;
   constructor() {
-    this.getFirstName();
+
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getFirstName();
+  }
 
   getFirstName() {
     this.firstName = localStorage.getItem('firstName')!;
   }
 
   logout() {
-    localStorage.removeItem('firstName');
-    localStorage.removeItem('custId');
-    this.getFirstName();
+    localStorage.clear();
+    window.location.reload();
+    // this.getFirstName();
   }
 }

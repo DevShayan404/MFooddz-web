@@ -1,0 +1,54 @@
+<section>
+  <div class="header_top_main">
+    <div class="container g-0">
+      <div class="row g-0 p-3">
+        <owl-carousel-o [options]="customOptions">
+          <ng-container *ngFor="let slide of headerList">
+            <ng-template carouselSlide [id]="slide.id">
+              <div class="header_list_top">
+                <nz-skeleton-element
+                  nzType="avatar"
+                  [nzActive]="true"
+                  [nzSize]="'default'"
+                ></nz-skeleton-element>
+                <nz-skeleton-element
+                  style="margin-top: 8px"
+                  nzType="button"
+                  [nzActive]="true"
+                  [nzSize]="'small'"
+                ></nz-skeleton-element>
+              </div>
+            </ng-template>
+          </ng-container>
+        </owl-carousel-o>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="header_second_main">
+    <div class="container">
+      <div class="row p-3">
+        <owl-carousel-o [options]="customOptionsHeader">
+          <ng-container *ngFor="let slide of headerList">
+            <ng-template carouselSlide [id]="slide.id">
+              <div class="header_list_second">
+                <nz-skeleton-element
+                  nzType="avatar"
+                  [nzActive]="true"
+                  [nzSize]="'default'"
+                ></nz-skeleton-element>
+                <nz-skeleton-element
+                  style="margin-top: 8px"
+                  nzType="button"
+                  [nzActive]="true"
+                  [nzSize]="'small'"
+                ></nz-skeleton-element>
+              </div>
+            </ng-template>
+          </ng-container>
+        </owl-carousel-o>
+      </div>
+    </div>
+  </div>
+</section>

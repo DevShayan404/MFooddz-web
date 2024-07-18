@@ -58,7 +58,9 @@ export class MenuComponent {
     private activatedRoute: ActivatedRoute
   ) {}
 
+  skeleton: boolean = false;
   ngOnInit(): void {
+    this.skeleton = true;
     this.activatedRoute.queryParams.subscribe((params) => {
       const shopId = params['menuId'];
       this.sharingService.getRestauranList().subscribe({
@@ -89,6 +91,8 @@ export class MenuComponent {
           ];
           localStorage.setItem('shopData', JSON.stringify(shopData));
           this.getLocalStorageCartList();
+          // this.getSelectedSubmenu();
+          this.skeleton = false;
         },
       });
     });
@@ -118,6 +122,12 @@ export class MenuComponent {
       // console.log(this.cartItems);
     }
   }
+  // getSelectedSubmenu(): void {
+  //   const savedSelection = localStorage.getItem('selectedSubMenu');
+  //   if (savedSelection) {
+  //     this.selectedSubMenu = JSON.parse(savedSelection);
+  //   }
+  // }
 
   // -----------Add menu in cart--------------
   addItemsInCartWithoutSubmenu(data: any) {
@@ -202,18 +212,28 @@ export class MenuComponent {
   onSubMenuHeaderSelect(
     subMenuIndex: number,
     subMenuHeader: any,
-    subMenuId: number
+    subMenuId: number,
+    UpTo: number
   ): void {
     const existingIndex = this.selectedSubMenu.findIndex(
       (item) => item.subMenuIndex === subMenuIndex
     );
+    console.log(existingIndex);
 
     if (existingIndex === -1) {
-      this.selectedSubMenu.push({ subMenuIndex, subMenuId, subMenuHeader });
+      this.selectedSubMenu.push({
+        subMenuIndex,
+        subMenuHeader,
+        subMenuId,
+        UpTo,
+      });
     } else {
       this.selectedSubMenu[existingIndex].subMenuHeader = subMenuHeader;
     }
-
+    // localStorage.setItem(
+    //   'selectedSubMenu',
+    //   JSON.stringify(this.selectedSubMenu)
+    // );
     this.calculateTotalAmount();
   }
 
@@ -258,7 +278,10 @@ export class MenuComponent {
       // Enable all checkboxes in the same group
       this.enableAllCheckboxes(subMenuIndex);
     }
-
+    // localStorage.setItem(
+    //   'selectedSubMenu',
+    //   JSON.stringify(this.selectedSubMenu)
+    // );
     this.calculateTotalAmount();
   }
 
@@ -290,6 +313,23 @@ export class MenuComponent {
   /////////////////////////////
 
   submenuAddToCart(): void {
+    // this.subMenuList.map((list) => {
+    //   list?.SubMenu.map((item: any) => {
+    //     if (item?.SubMenuHedaer !== undefined && item?.UpTo === 1) {
+    //       console.log('submenu', item);
+    //       this.selectedSubMenu.map((x) => {
+    //         if (x.UpTo !== undefined) {
+    //           console.log(x);
+    //         } else {
+    //           console.log('empty');
+    //         }
+    //       });
+    //     }
+    //   });
+    // });
+
+    // console.log(this.selectedSubMenu);
+
     if (this.selectedSubMenu.length > 0) {
       const subMenuList = this.selectedSubMenu.map((item) => {
         let matchingSubMenu = this.subMenuList[0].SubMenu.find(
@@ -311,9 +351,7 @@ export class MenuComponent {
         mainSubMenuCopy[0].Amount = this.totalSubmenuAmount;
         mainSubMenuCopy[0].TotalAmount = this.totalSubmenuAmount;
         this.cartItems.push(...mainSubMenuCopy);
-        // console.log('X', this.cartItems);
         localStorage.setItem('cartList', JSON.stringify(this.cartItems));
-        // console.log(this.cartItems);
 
         // -----total amount-----
         this.totalAmount = this.cartItems.reduce(
@@ -371,6 +409,20 @@ export class MenuComponent {
     } else {
       this.isVisibleCartDetail = true;
       // console.log(this.cartItems);
+    }
+  }
+
+  // ////////////////////////////////////////////////////
+  isScrollable = false;
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const secondElement = document.querySelector('.test') as HTMLElement;
+    const rect = secondElement.getBoundingClientRect();
+    if (rect.top <= 37.171875) {
+      this.isScrollable = true;
+    } else {
+      this.isScrollable = false;
     }
   }
 }

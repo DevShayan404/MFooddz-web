@@ -12,6 +12,12 @@
   -ms-user-select: none;
   user-select: none;
 }
+body.app-loaded .app-loader {
+  display: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}
 :root {
   /* background: #F26C2A;
   background: #7E7E7E;
@@ -130,4 +136,7 @@ ul {
 }
 .section_padding {
   padding: 20px 0 50px;
+}
+input[type="checkbox"] {
+  accent-color: var(--orange);
 }

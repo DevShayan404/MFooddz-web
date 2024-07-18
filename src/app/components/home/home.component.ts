@@ -102,6 +102,7 @@ export class HomeComponent {
   lat: any;
   long: any;
   selectedLocation!: string | null;
+  popularRestaurant!: any[];
   constructor(
     private sharingService: SharingService,
     private service: HomeService,
@@ -111,6 +112,7 @@ export class HomeComponent {
   ) {}
 
   ngOnInit(): void {
+    this.sharingService.showFooter(true);
     this.sharingService.getCountry().subscribe({
       next: (res) => {
         this.service.getSavedLocation(res).subscribe({
@@ -121,13 +123,26 @@ export class HomeComponent {
         });
       },
     });
+
+    this.service
+      .getRestaurants(+localStorage.getItem('countryCode')!)
+      .subscribe({
+        next: (res: any) => {
+          this.popularRestaurant = JSON.parse(
+            res?.Result?.Data
+          )?.Restaurant[0]?.PopularRestaurant;
+        },
+      });
   }
 
   submitForm() {
     if (this.locationForm.valid) {
       const latLng = this.locationForm.value.location;
+      const custId = localStorage.getItem('custId');
+      // console.log(custId);
+
       const countryCode = localStorage.getItem('countryCode');
-      if (latLng) {
+      if (latLng && custId) {
         const [lat, lng] = latLng
           .split(', ')
           .map((coord: string) => parseFloat(coord));
@@ -135,9 +150,12 @@ export class HomeComponent {
           queryParams: {
             lat: lat,
             lng: lng,
+            custId: custId,
             countryCode: countryCode,
           },
         });
+      } else {
+        this.router.navigate(['authentication']);
       }
     } else {
       Object.values(this.locationForm.controls).forEach((control) => {
@@ -156,13 +174,16 @@ export class HomeComponent {
         const latlng = `${position.coords.latitude},${position.coords.longitude}`;
         this.service.getCurrentLocation(latlng).subscribe({
           next: (data: any) => {
-            const latLng = (this.selectedLocation =
-              data.results[0].formatted_address);
+            // console.log(data);
+            this.selectedLocation = data?.results[0]?.formatted_address;
             this.locationForm.patchValue({
               location: `${data.results[0]?.geometry?.location?.lat}, ${data.results[0]?.geometry?.location?.lng}`,
             });
+            this.spinner = false;
             this.cdr.detectChanges();
-            // console.log(this.locationForm.value);
+          },
+          error: (err) => {
+            console.log(err);
           },
         });
         // const coordinates = latlng.split(',');

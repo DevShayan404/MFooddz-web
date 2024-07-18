@@ -38,7 +38,7 @@ export class LoginComponent {
   route: string = 'login';
   countryList: any[] = [];
   spinner!: boolean;
-  phoneNo!: string | number;
+  phoneNo: any;
   code!: string | number;
   message!: string;
   verficationCode!: string | number;
@@ -93,20 +93,19 @@ export class LoginComponent {
                   this.code = this.LoginForm.value.country!;
                   this.message = data?.Result?.Message;
                 }
-                setTimeout(() => {
-                  this.otpForm = this.fb.group({
-                    otp: this.fb.control<string | null>(
-                      data?.Result?.VerificationCode,
-                      Validators.required
-                    ),
-                  });
-                }, 500);
+                // setTimeout(() => {
+                //   this.otpForm = this.fb.group({
+                //     otp: this.fb.control<string | null>(
+                //       data?.Result?.VerificationCode,
+                //       Validators.required
+                //     ),
+                //   });
+                // }, 500);
                 this.verficationCode = data?.Result?.VerificationCode;
                 this.firstName = data?.Result?.FirstName;
                 this.custId = data?.Result?.UserId;
-
                 this.countryCode = data?.Result?.CountryCode.replace('+', '');
-                console.log(this.countryCode);
+                // console.log(this.countryCode);
                 this.LoginForm.reset();
                 this.spinner = false;
                 this.route = 'otp';
@@ -129,6 +128,7 @@ export class LoginComponent {
               localStorage.setItem('firstName', this.firstName);
               localStorage.setItem('custId', this.custId);
               localStorage.setItem('countryCode', this.countryCode);
+              localStorage.setItem('phoneNo', this.phoneNo);
               this.router.navigate(['']);
             } else {
               this.spinner = false;
@@ -165,6 +165,7 @@ export class LoginComponent {
                 localStorage.setItem('firstName', data?.Result?.FirstName);
                 localStorage.setItem('custId', data?.Result?.UserId);
                 localStorage.setItem('countryCode', this.countryCode);
+                localStorage.setItem('phoneNo', this.phoneNo);
                 this.userDetailForm.reset();
                 this.router.navigate(['']);
                 this.spinner = false;
