@@ -378,10 +378,8 @@
           ><input
             type="radio"
             [value]="items?.SubMenuId"
-            [checked]="isSelected(i, items?.SubMenuId)"
-            (change)="
-              onSubMenuHeaderSelect(i, items, list?.SubMenuId, list?.UpTo)
-            "
+            [checked]="isSelected(items?.SubMenuId)"
+            (change)="onSubMenuHeaderSelect(i, item, items, list)"
           />
           {{ items?.Name | titlecase }}</label
         >
@@ -390,9 +388,8 @@
           ><input
             type="checkbox"
             [value]="items?.SubMenuId"
-            [checked]="isSelected(i, items?.SubMenuId)"
-            [disabled]="items.disabled"
-            (change)="onCheckboxChange(i, items, $event, list?.SubMenuId)"
+            [checked]="isSelected(items?.SubMenuId)"
+            (change)="onSubMenuHeaderSelect(i, item, items, list)"
           />
           {{ items?.Name | titlecase }}</label
         >

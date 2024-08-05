@@ -1,12 +1,5 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  HostListener,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { SharingService } from './core/sharing-service/sharing.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
